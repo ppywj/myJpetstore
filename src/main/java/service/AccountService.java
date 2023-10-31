@@ -10,7 +10,7 @@ import persistence.Imp.AccountDAOImp;
 public class AccountService {
     private AccountDAO accountDAO;
 
-    public AccountService(){
+    public AccountService() {
         accountDAO = new AccountDAOImp();
     }
 
@@ -20,25 +20,31 @@ public class AccountService {
 
     //根据账号密码获取用户详细信息
     public User getAccount(String username, String password) {
-        User user= new User();
+        User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         return accountDAO.getAccountByUsernameAndPassword(user);
     }
 
-    public void insertAccount(User user) {
-        accountDAO.insertAccount(user);
-        accountDAO.insertProfile(user);
-        accountDAO.insertSignon(user);
+    public int insertAccount(User user) {
+        int res1 = accountDAO.insertAccount(user);
+        if (res1 != 0)
+            return res1;
+        int res2 = accountDAO.insertProfile(user);
+        int res3 = accountDAO.insertSignon(user);
+        return 0;
     }
 
-    public void updateAccount(User user) {
-        accountDAO.updateAccount(user);
-        accountDAO.updateProfile(user);
-
+    public int updateAccount(User user) {
+        int res1 = accountDAO.updateAccount(user);
+        if (res1 != 0)
+            return res1;
+        int res2 = accountDAO.updateProfile(user);
+        int res3 = 0;
         if (user.getPassword() != null && user.getPassword().length() > 0) {
-            accountDAO.updateSignon(user);
+            res3 = accountDAO.updateSignon(user);
         }
+        return 0;
     }
 
 }

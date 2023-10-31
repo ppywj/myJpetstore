@@ -89,8 +89,21 @@ public class NewAccountServlet
             user.setBannerOption(bannerOption);
 
             AccountService accountService = new AccountService();
-            accountService.insertAccount(user);
-
+            int res=accountService.insertAccount(user);
+            //账号已经存在
+            if(res==1)
+            {
+                request.setAttribute("errorMsg","3");
+                request.getRequestDispatcher(REGISTER).forward(request, response);
+                return;
+            }
+            //系统异常
+            if(res==2)
+            {
+                request.setAttribute("errorMsg","4");
+                request.getRequestDispatcher(REGISTER).forward(request, response);
+                return ;
+            }
             request.getRequestDispatcher(LOGIN).forward(request,response);
         } else {
             request.setAttribute("errorMsg","2");

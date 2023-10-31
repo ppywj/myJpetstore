@@ -7,8 +7,9 @@ import persistence.DatabaseUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import static persistence.DatabaseUtil.close;
-import static persistence.DatabaseUtil.getConnection;
+import java.sql.SQLIntegrityConstraintViolationException;
+
+import static persistence.DatabaseUtil.*;
 
 /**
  * @author pp
@@ -46,14 +47,16 @@ public class AccountDAOImp implements AccountDAO {
     @Override
     public User getAccountByUsername(String username) {
         User user = null;
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(getAccountByUsername);
-            preparedStatement.setString(1,username);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(getAccountByUsername);
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
 
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 user = new User();
                 user.setUsername(resultSet.getString(1));
                 user.setEmail(resultSet.getString(2));
@@ -72,12 +75,11 @@ public class AccountDAOImp implements AccountDAO {
                 user.setListOption(resultSet.getInt(15) == 1);
                 user.setBannerOption(resultSet.getInt(16) == 1);
                 user.setBannerName(resultSet.getString(18));
-
-                close(resultSet,preparedStatement,connection);
-
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            close(resultSet, preparedStatement, connection);
         }
         return user;
     }
@@ -85,14 +87,16 @@ public class AccountDAOImp implements AccountDAO {
     @Override
     public User getAccountByUsernameAndPassword(User user) {
         User checkUser = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            Connection connection = DatabaseUtil.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(getAccountByUsernameAndPassword);
+            connection = DatabaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement(getAccountByUsernameAndPassword);
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if(resultSet.next()){
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
                 System.out.println("有数据");
                 checkUser = new User();
                 checkUser.setUsername(resultSet.getString(1));
@@ -112,27 +116,26 @@ public class AccountDAOImp implements AccountDAO {
                 checkUser.setListOption((resultSet.getInt(15) == 1));
                 checkUser.setBannerOption((resultSet.getInt(16) == 1));
                 checkUser.setBannerName(resultSet.getString(17));
-
-                close(resultSet,preparedStatement,connection);
-
             }
-            else
-            {
+            else {
                 System.out.println("没数据");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            close(resultSet, preparedStatement, connection);
         }
         return checkUser;
     }
 
-    @Override
-    public boolean insertAccount(User user) {
-        boolean flag = false;
 
+    @Override
+    public int insertAccount(User user) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(insertAccount);
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(insertAccount);
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getFirstName());
             preparedStatement.setString(3, user.getLastName());
@@ -146,72 +149,84 @@ public class AccountDAOImp implements AccountDAO {
             preparedStatement.setString(11, user.getPhone());
             preparedStatement.setString(12, user.getUsername());
             int row = preparedStatement.executeUpdate();
-
-            if(row == 1){
-                flag = true;
-            }
-
-            close(null,preparedStatement,connection);
-        } catch (Exception e){
+            return 0;
+        } catch (SQLIntegrityConstraintViolationException e) {
+            rollbackTransaction(connection);
+            // 处理重复主键的情况
+            System.out.println("主键重复，插入失败！");
             e.printStackTrace();
+            return 1;
+        } catch (Exception e) {
+            rollbackTransaction(connection);
+            e.printStackTrace();
+            return 2;
+        } finally {
+            close(null, preparedStatement, connection);
         }
-
-
-        return flag;
     }
 
     @Override
-    public boolean insertProfile(User user) {
-        boolean flag = false;
-
+    public int insertProfile(User user) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(insertProfile);
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(insertProfile);
             preparedStatement.setString(1, user.getLanguagePreference());
             preparedStatement.setString(2, user.getFavouriteCategoryId());
             preparedStatement.setString(3, user.getUsername());
-            preparedStatement.setInt(4,(user.isListOption())?1:0);
-            preparedStatement.setInt(5,(user.isBannerOption())?1:0);
+            preparedStatement.setInt(4, (user.isListOption()) ? 1 : 0);
+            preparedStatement.setInt(5, (user.isBannerOption()) ? 1 : 0);
             int row = preparedStatement.executeUpdate();
-
-            if(row == 1){
-                flag = true;
-            }
-            close(null,preparedStatement,connection);
-        }catch (Exception e){
+            return 0;
+        } catch (SQLIntegrityConstraintViolationException e) {
+            rollbackTransaction(connection);
+            // 处理重复主键的情况
+            System.out.println("主键重复，插入失败！");
             e.printStackTrace();
+            return 1;
+        } catch (Exception e) {
+            rollbackTransaction(connection);
+            e.printStackTrace();
+            return 2;
+        } finally {
+            close(null, preparedStatement, connection);
         }
-        return flag;
     }
 
     @Override
-    public boolean insertSignon(User user) {
-        boolean flag = false;
+    public int insertSignon(User user) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(insertSignon);
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(insertSignon);
             preparedStatement.setString(1, user.getPassword());
             preparedStatement.setString(2, user.getUsername());
             int row = preparedStatement.executeUpdate();
-
-            if(row == 1){
-                flag = true;
-            }
-
-          close(null,preparedStatement,connection);
-        }catch (Exception e){
+            return 0;
+        } catch (SQLIntegrityConstraintViolationException e) {
+            rollbackTransaction(connection);
+            // 处理重复主键的情况
+            System.out.println("主键重复，插入失败！");
             e.printStackTrace();
+            return 1;
+        } catch (Exception e) {
+            rollbackTransaction(connection);
+            e.printStackTrace();
+            return 2;
+        } finally {
+            close(null, preparedStatement, connection);
         }
-        return flag;
     }
 
     @Override
-    public boolean updateAccount(User user) {
-        boolean flag = false;
-
+    public int updateAccount(User user) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(updateAccount);
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(updateAccount);
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getFirstName());
             preparedStatement.setString(3, user.getLastName());
@@ -225,69 +240,85 @@ public class AccountDAOImp implements AccountDAO {
             preparedStatement.setString(11, user.getPhone());
             preparedStatement.setString(12, user.getUsername());
             int row = preparedStatement.executeUpdate();
-
-            if(row == 1){
-                flag = true;
-            }
-
-            close(null,preparedStatement,connection);
-        } catch (Exception e){
+            return 0;
+        } catch (SQLIntegrityConstraintViolationException e) {
+            rollbackTransaction(connection);
+            // 处理重复主键的情况
+            System.out.println("主键重复，插入失败！");
             e.printStackTrace();
+            return 1;
+        } catch (Exception e) {
+            rollbackTransaction(connection);
+            e.printStackTrace();
+            return 2;
+        } finally {
+            close(null, preparedStatement, connection);
         }
-        return flag;
     }
 
+    /**
+     * 返回0表示更新成功
+     * 返回1表示主键冲突
+     * 返回2表示系统异常
+     *
+     * @param user
+     * @return
+     */
     @Override
-    public boolean updateProfile(User user) {
-        boolean flag = false;
-        //updateProfile
-        //UPDATE PROFILE SET LANGPREF = ?, FAVCATEGORY = ?,mylistopt = ?,banneropt = ? WHERE USERID = ?
-
-        try{
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(updateProfile);
+    public int updateProfile(User user) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            startTransaction(connection);
+            preparedStatement = connection.prepareStatement(updateProfile);
             preparedStatement.setString(1, user.getLanguagePreference());
             preparedStatement.setString(2, user.getFavouriteCategoryId());
-            preparedStatement.setInt(3, user.isListOption()?1:0);
-            preparedStatement.setInt(4, user.isBannerOption()?1:0);
+            preparedStatement.setInt(3, user.isListOption() ? 1 : 0);
+            preparedStatement.setInt(4, user.isBannerOption() ? 1 : 0);
             preparedStatement.setString(5, user.getUsername());
 
             int row = preparedStatement.executeUpdate();
-
-            if(row == 1){
-                flag = true;
-            }
-
-            close(null,preparedStatement,connection);
-        } catch (Exception e){
+            commitTransaction(connection);
+            return 0;
+        } catch (SQLIntegrityConstraintViolationException e) {
+            rollbackTransaction(connection);
+            // 处理重复主键的情况
+            System.out.println("主键重复，插入失败！");
             e.printStackTrace();
+            return 1;
+        } catch (Exception e) {
+            rollbackTransaction(connection);
+            e.printStackTrace();
+            return 2;
+        } finally {
+            close(null, preparedStatement, connection);
         }
-
-        return flag;
     }
 
     @Override
-    public boolean updateSignon(User user) {
-        //UPDATE SIGNON SET PASSWORD = ? WHERE USERNAME = ?
-        boolean flag = false;
-        try{
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(updateSignon);
+    public int updateSignon(User user) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            //开启事务
+            startTransaction(connection);
+            preparedStatement = connection.prepareStatement(updateSignon);
             preparedStatement.setString(1, user.getPassword());
             preparedStatement.setString(2, user.getUsername());
-
             int row = preparedStatement.executeUpdate();
-
-            if(row == 1){
-                flag = true;
-            }
-
-            close(null,preparedStatement,connection);
-        } catch (Exception e){
+            //提交事务
+            commitTransaction(connection);
+            return 0;
+        } catch (Exception e) {
+            //回滚事务
+            rollbackTransaction(connection);
             e.printStackTrace();
+            return 1;
+        } finally {
+            close(null, preparedStatement, connection);
         }
-
-        return flag;
 
     }
 }

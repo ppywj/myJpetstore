@@ -11,15 +11,15 @@ public interface AccountDAO {
 
     User getAccountByUsernameAndPassword(User user);
 
-    boolean insertAccount(User user);
+    int insertAccount(User user);
 
-    boolean insertProfile(User user);
+    int insertProfile(User user);
 
-    boolean insertSignon(User user);
+    int  insertSignon(User user);
 
-    boolean updateAccount(User user);
+    int  updateAccount(User user);
 
-    boolean updateProfile(User user);
+    int updateProfile(User user);
 
-    boolean updateSignon(User user);
+    int  updateSignon(User user);
 }

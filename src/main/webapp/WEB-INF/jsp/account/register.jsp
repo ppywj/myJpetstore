@@ -121,20 +121,25 @@
     function validateForm() {
         const username = document.getElementById("account").value;
         const password = document.getElementById("password").value;
-        const repeatPassword=document.getElementById("repeatedPassword").value;
+        const repeatPassword = document.getElementById("repeatedPassword").value;
         const checkCode = document.getElementsByName("checkCode")[0].value;
 
-        if (username.trim() === "" || password.trim() === "" ||repeatPassword.trim()===""|| checkCode.trim() === "") {
+        if (username.trim() === "" || password.trim() === "" || repeatPassword.trim() === "" || checkCode.trim() === "") {
             alert("账号、密码、确认密码或验证码不能为空");
             return false;
         }
         return true;
     }
+
     const error = "${errorMsg}";
     if (error === '1') {
         alert("验证码错误")
     } else if (error === '2') {
         alert("两次输入的密码不一致")
+    } else if (error === '3') {
+        alert("账号已被注册")
+    } else if (error === '4') {
+        alert("系统异常请稍后重试")
     }
 </script>
 
