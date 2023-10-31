@@ -1,14 +1,235 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="myJpetstore:war exploded" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8afe8dee-ddb1-4861-a8ed-c929960822e3" name="变更" comment="" />
+    <list default="true" id="8afe8dee-ddb1-4861-a8ed-c929960822e3" name="变更" comment="Initial commit">
+      <changelist_data name="pp" email="" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/___.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/banner_birds.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/banner_cats.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/banner_dogs.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/banner_fish.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/banner_reptiles.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/bird1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/bird2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/birds_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/cart.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/cat1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/cat2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/cats_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog3.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog4.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog5.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog6.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dogs.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dogs_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish3.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish4.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/lizard1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/logo-topbar.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/poweredby.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/reptiles_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/separator.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/sm_birds.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/sm_cats.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/sm_dogs.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/sm_fish.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/sm_reptiles.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/snake1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/splash.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dataBaseConfig.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/AccountDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/DatabaseUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/Imp/AccountDAOImp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/AccountService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/LoginServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/NewAccountServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/RegisterServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/ValidateCodeServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/dataBaseConfig.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/IncludeAccountFields.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/login.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/register.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/Main.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/Error.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/IncludeBottom.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/includeTop.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/jpetstore.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/help.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/banner_birds.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/banner_cats.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/banner_dogs.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/banner_fish.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/banner_reptiles.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/bird1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/bird2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/birds_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/cart.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/cat1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/cat2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/cats_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog3.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog4.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog5.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog6.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dogs.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dogs_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish3.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish4.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/lizard1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/logo-topbar.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/poweredby.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/reptiles_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/separator.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/sm_birds.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/sm_cats.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/sm_dogs.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/sm_fish.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/sm_reptiles.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/snake1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/splash.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dataBaseConfig.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/User.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/persistence/AccountDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/persistence/DatabaseUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/persistence/Imp/AccountDAOImp.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/persistence/test.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/AccountService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/servlet/LoginServlet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/servlet/NewAccountServlet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/servlet/RegisterServlet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/servlet/ValidateCodeServlet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/dataBaseConfig.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/domain/User.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/AccountDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/DatabaseUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/Imp/AccountDAOImp.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/test.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/service/AccountService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/LoginServlet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/NewAccountServlet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/RegisterServlet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/ValidateCodeServlet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/account/IncludeAccountFields.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/account/login.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/account/register.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/catalog/Main.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/common/Error.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/common/IncludeBottom.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/common/IncludeTop.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/lib/druid-1.2.16.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/lib/javax.servlet-api-3.1.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/lib/javax.servlet.jsp-api-2.3.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/lib/jsp-api-2.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/lib/jstl-api-1.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/lib/mysql-connector-java-8.0.25.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/lib/protobuf-java-3.11.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/lib/servlet-api-2.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/lib/standard-1.1.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/css/includeTop.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/css/jpetstore.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/help.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/banner_birds.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/banner_cats.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/banner_dogs.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/banner_fish.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/banner_reptiles.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/bird1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/bird2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/birds_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/cart.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/cat1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/cat2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/cats_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/dog1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/dog2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/dog3.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/dog4.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/dog5.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/dog6.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/dogs.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/dogs_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/fish.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/fish1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/fish2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/fish3.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/fish4.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/fish_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/lizard1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/logo-topbar.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/poweredby.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/reptiles_icon.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/separator.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/sm_birds.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/sm_cats.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/sm_dogs.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/sm_fish.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/sm_reptiles.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/snake1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/images/splash.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/myJpetstore/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/index.jsp" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Jsp File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JspContextManager">
+    <jsp-to-context jsp-file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp" context-file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/Error.jsp" />
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -22,6 +243,7 @@
     </option>
   </component>
   <component name="ProjectId" id="2XVdzEPPDBX4RvxEMPCjhmhKupH" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -29,10 +251,43 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\javaProject\MyJpestore\src\main\resources" />
+      <recent name="E:\javaProject\MyJpestore\target" />
+      <recent name="E:\javaProject\MyJpestore\src\main\webapp\css" />
+      <recent name="E:\javaProject\MyJpestore\src\main\webapp\images" />
+      <recent name="E:\javaProject\MyJpestore\src\main\webapp" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\javaProject\MyJpestore\src\main\resources" />
+      <recent name="E:\javaProject\MyJpestore\src\main\webapp\WEB-INF\jsp\account" />
+      <recent name="E:\javaProject\MyJpestore" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Tomcat 服务器.Tomcat 8.5.84">
+    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="persistence.test" />
+      <module name="myJpetstore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="persistence.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 8.5.84" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.84" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
@@ -120,6 +375,15 @@
         </option>
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Tomcat 服务器.Tomcat 8.5.84" />
+      <item itemvalue="应用程序.test" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="应用程序.test" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -129,11 +393,60 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698718441811</updated>
-      <workItem from="1698718444022" duration="54000" />
+      <workItem from="1698718444022" duration="25372000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/persistence/Imp/AccountDAOImp.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
+        <watch expression="resultSet" />
+      </configuration>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/persistence/Imp/AccountDAOImp.java" line="92">
+        <watch expression="resultSet" />
+      </inline-watch>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/myJpetstore$Tomcat_8_5_84.ic" NAME="Tomcat 8.5.84 覆盖结果" MODIFIED="1698751692235" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

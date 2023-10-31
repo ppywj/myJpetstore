@@ -1,0 +1,2933 @@
+Index: src/main/webapp/index.jsp
+===================================================================
+diff --git a/src/main/webapp/index.jsp b/src/main/webapp/index.jsp
+deleted file mode 100644
+--- a/src/main/webapp/index.jsp	(revision 9fd434a16af0f8d417e3cb6b31f52b047f25e615)
++++ /dev/null	(revision 9fd434a16af0f8d417e3cb6b31f52b047f25e615)
+@@ -1,5 +0,0 @@
+-<html>
+-<body>
+-<h2>Hello World!</h2>
+-</body>
+-</html>
+Index: target/myJpetstore/index.jsp
+===================================================================
+diff --git a/target/myJpetstore/index.jsp b/target/myJpetstore/index.jsp
+deleted file mode 100644
+--- a/target/myJpetstore/index.jsp	(revision 9fd434a16af0f8d417e3cb6b31f52b047f25e615)
++++ /dev/null	(revision 9fd434a16af0f8d417e3cb6b31f52b047f25e615)
+@@ -1,5 +0,0 @@
+-<html>
+-<body>
+-<h2>Hello World!</h2>
+-</body>
+-</html>
+Index: dataBaseConfig.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/dataBaseConfig.properties b/dataBaseConfig.properties
+new file mode 100644
+--- /dev/null	(date 1698746593517)
++++ b/dataBaseConfig.properties	(date 1698746593517)
+@@ -0,0 +1,28 @@
++# ???????
++druid.datasource.name=jpetStoreDataSource
++# JDBC??
++url=jdbc:mysql://localhost:3306/jpetstore?rewriteBatchedStatements=true
++# ???
++username=root
++# ??
++password=pp041572
++# ????
++driverClassName=com.mysql.cj.jdbc.Driver
++# ?????
++maxActive=300
++# ?????
++minIdle=20
++# ??????
++maxWait=10000
++#????????????????????
++testOnBorrow=true
++# ???????????????
++testOnReturn=false
++# ??????????????
++timeBetweenEvictionRunsMillis=60000
++# ?????????????
++numTestsPerEvictionRun=10
++# ???????????????????
++minEvictableIdleTimeMillis=300000
++# ????????????
++connection-leak-enable=true
+Index: src/main/java/persistence/DatabaseUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/persistence/DatabaseUtil.java b/src/main/java/persistence/DatabaseUtil.java
+new file mode 100644
+--- /dev/null	(date 1698750704640)
++++ b/src/main/java/persistence/DatabaseUtil.java	(date 1698750704640)
+@@ -0,0 +1,93 @@
++package persistence;
++
++import javax.sql.DataSource;
++import java.io.FileInputStream;
++import java.sql.Connection;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.sql.Statement;
++import java.util.Properties;
++import static com.alibaba.druid.pool.DruidDataSourceFactory.createDataSource;
++
++/**
++ * @author pp
++ * 数据库给工具类--提供获取数据源，关闭数据库资源，开启事务，提交事务，回滚事务
++ */
++
++public class DatabaseUtil {
++    //数据源
++    private static DataSource source;
++
++    //在静态代码块中完成初始化
++    static {
++        Properties properties = new Properties();
++        try {
++            properties.load(DatabaseUtil.class.getClassLoader().getResourceAsStream("dataBaseConfig.properties"));
++            source = createDataSource(properties);
++            System.out.println("test");
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
++
++    }
++
++    //获取连接
++    public static Connection getConnection() throws SQLException {
++        return source.getConnection();
++    }
++
++
++    //关闭连接--返回连接池
++    public static void close(ResultSet res, Statement statement, Connection connection) {
++        try {
++            if (res != null)
++                res.close();
++            if (statement != null)
++                statement.close();
++            if (connection != null)
++                connection.close();
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
++    }
++
++    //开启事务
++    public static void startTransaction(Connection connection) {
++        if (connection == null)
++            return;
++        try {
++            connection.setAutoCommit(false);
++        } catch (SQLException e) {
++            e.printStackTrace();
++        }
++    }
++
++    //提交事务
++    public static void commitTransaction(Connection connection) {
++        if (connection == null)
++            return;
++        try {
++            if (!connection.getAutoCommit())
++                connection.commit();
++            else
++                return;
++        } catch (SQLException e) {
++            e.printStackTrace();
++        }
++    }
++
++    //回滚事务
++    public static void rollbackTransaction(Connection connection) {
++        if (connection == null)
++            return;
++        try {
++            if (!connection.getAutoCommit())
++                return;
++            else
++                connection.rollback();
++        } catch (SQLException e) {
++            e.printStackTrace();
++        }
++    }
++
++}
+\ No newline at end of file
+Index: src/main/webapp/WEB-INF/jsp/common/IncludeBottom.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/WEB-INF/jsp/common/IncludeBottom.jsp b/src/main/webapp/WEB-INF/jsp/common/IncludeBottom.jsp
+new file mode 100644
+--- /dev/null	(date 1698741704022)
++++ b/src/main/webapp/WEB-INF/jsp/common/IncludeBottom.jsp	(date 1698741704022)
+@@ -0,0 +1,25 @@
++<%--
++  Created by IntelliJ IDEA.
++  User: 袁文靖
++  Date: 2023-10-31
++  Time: 12:24
++  To change this template use File | Settings | File Templates.
++--%>
++
++<div id="Footer">
++
++    <div id="PoweredBy">&nbsp;<a href="http://www.mybatis.org">www.mybatis.org</a>
++    </div>
++
++    <div id="Banner"><c:if test="${sessionScope.accountBean != null }">
++        <c:if test="${sessionScope.accountBean.authenticated}">
++            <c:if test="${sessionScope.accountBean.user.bannerOption}">
++                ${sessionScope.accountBean.user.bannerName}
++            </c:if>
++        </c:if>
++    </c:if></div>
++
++</div>
++
++</body>
++</html>
+Index: src/main/webapp/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/index.html b/src/main/webapp/index.html
+new file mode 100644
+--- /dev/null	(date 1698720197289)
++++ b/src/main/webapp/index.html	(date 1698720197289)
+@@ -0,0 +1,44 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <title>JPetStore Demo</title>
++    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600&display=swap" rel="stylesheet">
++    <style>
++        #Content {
++            max-width: 700px;
++            margin: 0 auto;
++            text-align: center;
++        }
++        p {
++            margin: 20px 0;
++        }
++        a {
++            display: inline-block;
++            background-color: #3498db;
++            color: #fff;
++            padding: 10px 20px;
++            text-decoration: none;
++            font-weight: 600;
++            border-radius: 5px;
++            transition: background-color 0.3s ease;
++        }
++        a:hover {
++            background-color: #2980b9;
++        }
++        sub {
++            display: block;
++            margin-top: 50px;
++            font-size: 14px;
++            color: #aaa;
++        }
++    </style>
++</head>
++<body>
++<div id="Content">
++    <h2>Welcome to JPetStore 6</h2>
++    <p><a href="actions/Catalog.action">Enter the Store</a></p>
++    <sub>© www.mybatis.org</sub>
++</div>
++</body>
++</html>
+\ No newline at end of file
+Index: src/main/webapp/css/includeTop.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/css/includeTop.css b/src/main/webapp/css/includeTop.css
+new file mode 100644
+--- /dev/null	(date 1698755201355)
++++ b/src/main/webapp/css/includeTop.css	(date 1698755201355)
+@@ -0,0 +1,60 @@
++
++body {
++    background-color: #ffffff;
++}
++#Header {
++    display: flex;
++    flex-direction: column;
++    align-items: center;
++    background-color: #f8f8f8;
++    border-bottom: 1px solid #ccc;
++    padding: 10px;
++}
++
++#Logo {
++    margin-right: 20px;
++}
++
++#LogoContent img {
++    height: 50px;
++}
++
++#MenuContent a {
++    color: #333;
++    text-decoration: none;
++    margin-right: 10px;
++    font-size: 14px;
++}
++
++#MenuContent img {
++    margin: 0 5px;
++}
++
++#SearchContent form {
++    display: flex;
++    align-items: center;
++}
++
++#SearchContent input[type="text"] {
++    padding: 4px;
++    border: 1px solid #ccc;
++    border-radius: 3px;
++}
++
++#SearchContent input[type="submit"] {
++    background-color: #337ab7;
++    color: #fff;
++    border: none;
++    padding: 6px 10px;
++    margin-left: 5px;
++    cursor: pointer;
++}
++
++#QuickLinks a img,
++#QuickLinks img.separator {
++    margin-right: 5px;
++}
++
++#QuickLinks {
++    margin-top: auto;
++}
+\ No newline at end of file
+Index: src/main/webapp/help.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/help.html b/src/main/webapp/help.html
+new file mode 100644
+--- /dev/null	(date 1698741704053)
++++ b/src/main/webapp/help.html	(date 1698741704053)
+@@ -0,0 +1,216 @@
++<!-- 帮助页面 不拦截-->
++<!DOCTYPE html>
++<html xmlns="http://www.w3.org/1999/xhtml">
++<head>
++    <title>JPetStore Demo</title>
++    <link rel="stylesheet" href="css/jpetstore.css" type="text/css" media="screen"/>
++    <style>
++        body {
++            font-family: Arial, sans-serif;
++            line-height: 1.5;
++            margin: 0;
++            padding: 20px;
++        }
++
++        h1 {
++            font-size: 24px;
++            text-align: center;
++        }
++
++        p {
++            margin-bottom: 10px;
++        }
++
++        ul {
++            list-style-type: none;
++            padding-left: 0;
++        }
++
++        a {
++            color: #6fd954;
++            text-decoration: none;
++        }
++
++        #Content {
++            max-width: 800px;
++            margin: 0 auto;
++        }
++
++        #Content h2 {
++            margin-top: 20px;
++            font-size: 20px;
++        }
++
++        #Content a[name] {
++            display: block;
++            position: relative;
++            top: -80px;
++            visibility: hidden;
++        }
++
++        #Content ul {
++            margin-left: 20px;
++        }
++
++        #Content p,
++        #Content ul {
++            margin-bottom: 10px;
++        }
++
++        #Content h4 {
++            margin: 15px 0 5px;
++            font-size: 18px;
++        }
++
++    </style>
++</head>
++<body>
++<div id="Content">
++    <h1>JPetStore Demo</h1>
++    <p>
++        The JPetStore Demo is an online pet store. Like most e-stores, you can browse
++        and search the product catalog, choose items to add to a shopping cart, amend
++        the shopping cart, and order the items in the shopping cart. You can perform
++        many of these actions without registering with or logging into the
++        application. However, before you can order items you must log in (sign-in) to
++        the application. In order to sign-in, you must have an user with the
++        application, which is created when you register (sign-up) with the
++        application.
++    </p>
++    <ul>
++        <li><a href="#SigningUp">Signing Up</a></li>
++        <li><a href="#SigningIn">Signing In</a></li>
++        <li><a href="#Catalog">Working with the Product Catalog</a></li>
++        <li><a href="#CatalogBrowsing">Browsing the Catalog</a></li>
++        <li><a href="#CatalogSearching">Searching the Catalog</a></li>
++        <li><a href="#ShoppingCart">Working with the Shopping Cart</a></li>
++        <li><a href="#ShoppingCartAdd">Adding and Removing Items</a></li>
++        <li><a href="#ShoppingCartUpdate">Updating the Quantity of an Item</a></li>
++        <li><a href="#Ordering">Ordering Items</a></li>
++        <li><a href="#OrderReview">Reviewing an Order</a></li>
++        <li><a href="#Issues">Known Issues</a></li>
++    </ul>
++    <h2><a id="SigningUp" name="SigningUp"></a>Signing Up</h2>
++    <p>
++        To sign up, click the Sign-in link at the right end of the banner. Next,
++        click the New User link on the resulting page. Among other information, the
++        signup page requires you to provide a user identifier and password. This
++        information is used to identify your user and must be provided when
++        signing in.
++    </p>
++    <h2><a id="SigningIn" name="SigningIn"></a>Signing In</h2>
++
++    <p>
++        You sign in to the application by clicking the Sign-in link at the right end
++        of the banner, filling in the user identifier and password, and clicking the
++        Submit button.
++    </p>
++
++    <p>
++        You will also be redirected to the signin page when you try to place an
++        order and you have not signed in. Once you have signed in, you can return to
++        your shopping session by clicking the shopping cart icon at the right end of
++        the banner.
++    </p>
++
++    <h2><a id="Catalog" name="Catalog"></a>Working with the Product Catalog</h2>
++
++    <p>This section describes how to browse and search the product catalog.</p>
++
++    <h4><a id="CatalogBrowsing" name="CatalogBrowsing"></a>Browsing the Catalog</h4>
++
++    <p>
++        The pet store catalog is organized hierarchically as follows: categories,
++        products, items.
++    </p>
++
++    <p>
++        You list the pets in a category by clicking on the category name in the
++        left column of the main page, or by clicking on the picture representing the
++        category.
++    </p>
++
++    <p>
++        Once you select a category, the pet store will display a list of products
++        within a category. Selecting a product displays a list of items and their
++        prices. Selecting a product item displays a text and visual description of
++        the item and the number of that item in stock.
++    </p>
++
++    <h4><a id="CatalogSearching" name="CatalogSearching"></a>Searching the Catalog</h4>
++
++    <p>
++        You search for products by typing the product name in search field in the
++        middle of the banner.
++    </p>
++
++    <h2><a id="ShoppingCart" name="ShoppingCart"></a>Working with the Shopping Cart</h2>
++
++    <h4><a id="ShoppingCartAdd" name="ShoppingCartAdd"></a>Adding and Removing Items</h4>
++
++    <p>
++        You add an item to your shopping cart by clicking the Add to Cart button to
++        the right of an item. This action also displays your shopping cart.
++    </p>
++
++    <p>
++        You can remove the item by clicking the Remove button to the left of the
++        item.
++    </p>
++
++    <p>
++        To continue shopping, you select a product category from the list under
++        the banner.
++    </p>
++
++    <h4><a id="ShoppingCartUpdate" name="ShoppingCartUpdate"></a>Updating the Quantity of an Item</h4>
++
++    <p>
++        You adjust the quantity of an item by typing the quantity in the item's
++        Quantity field in the shopping cart and clicking the Update button.
++    </p>
++
++    <p>
++        If the quantity of items requested is greater than that in stock, the In
++        Stock field in the shopping cart will show that the item is backordered.
++    </p>
++
++    <h4><a id="Ordering" name="Ordering"></a>Ordering Items</h4>
++
++    <p>
++        You order the items in the shopping cart by selecting the Proceed to Checkout
++        button. The pet store will display a read-only list of the shopping cart
++        contents. To proceed with the checkout, click the Continue button.
++    </p>
++
++    <p>
++        If you have not signed in, the application will display the signin page,
++        where you will need to provide your user name and password. Otherwise, the
++        application will display a page requesting payment and shipping information.
++        When you have filled in the required information, you click the Submit
++        button, and the application will display a read-only page containing your
++        billing and shipping address. If you need to change any information,
++        click your browser's Back button and enter the correct information. To
++        complete the order, you click the Continue button.
++    </p>
++
++    <h2><a id="OrderReview" name="OrderReview"></a>Reviewing An Order</h2>
++
++    <p>
++        The final screen contains your order information.
++    </p>
++
++    <p>
++        The application can be set up to send email confirmation of orders.
++        This option can only be set when the application is deployed. See the
++        installation instructions for further information.
++    </p>
++
++
++    <p><sub>Copyright www.mybatis.org</sub></p>
++
++</div>
++
++</body>
++
++</html>
+Index: src/main/webapp/WEB-INF/jsp/account/IncludeAccountFields.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/WEB-INF/jsp/account/IncludeAccountFields.jsp b/src/main/webapp/WEB-INF/jsp/account/IncludeAccountFields.jsp
+new file mode 100644
+--- /dev/null	(date 1698741703981)
++++ b/src/main/webapp/WEB-INF/jsp/account/IncludeAccountFields.jsp	(date 1698741703981)
+@@ -0,0 +1,91 @@
++<%--
++  Created by IntelliJ IDEA.
++  User: 袁文靖
++  Date: 2023-10-31
++  Time: 12:59
++  To change this template use File | Settings | File Templates.
++--%>
++
++
++<h3>Account Information</h3>
++
++<table>
++    <tr>
++        <td>First name:</td>
++        <td>
++            <input type="text" name="firstName" value="${sessionScope.user.firstName}"/>
++        </td>
++    </tr>
++    <tr>
++        <td>Last name:</td>
++        <td>
++            <input type="text" name="lastName" value="${sessionScope.user.lastName}"/>
++        </td>
++    </tr>
++    <tr>
++        <td>Email:</td>
++        <td><input type="text" size="40" name="email" value="${sessionScope.user.email}"/></td>
++    </tr>
++    <tr>
++        <td>Phone:</td>
++        <td><input type="text" name="phone" value="${sessionScope.user.phone}"/></td>
++    </tr>
++    <tr>
++        <td>Address 1:</td>
++        <td><input type="text" size="40" name="address1" value="${sessionScope.user.address1}"/></td>
++    </tr>
++    <tr>
++        <td>Address 2:</td>
++        <td><input type="text" size="40" name="address2" value="${sessionScope.user.address2}"/></td>
++    </tr>
++    <tr>
++        <td>City:</td>
++        <td><input type="text" name="city" value="${sessionScope.user.city}"/></td>
++    </tr>
++    <tr>
++        <td>State:</td>
++        <td><input type="text" size="4" name="state" value="${sessionScope.user.state}"/></td>
++    </tr>
++    <tr>
++        <td>Zip:</td>
++        <td><input type="text" size="10" name="zip" value="${sessionScope.user.zip}"/></td>
++    </tr>
++    <tr>
++        <td>Country:</td>
++        <td><input type="text" size="15" name="country" value="${sessionScope.user.country}"/></td>
++    </tr>
++</table>
++
++<h3>Profile Information</h3>
++
++<table>
++    <tr>
++        <td>Language Preference:</td>
++        <td>
++            <select name="languagePreference" id="languagePreference">
++                <c:forEach var="languages" items="${sessionScope.languages}">
++                    <option>${languages}</option>
++                </c:forEach>
++            </select>
++        </td>
++    </tr>
++    <tr>
++        <td>Favourite Category:</td>
++        <td>
++            <select name="favouriteCategoryId" id="favouriteCategoryId">
++                <c:forEach var="categories" items="${sessionScope.categories}">
++                    <option>${categories}</option>
++                </c:forEach>
++            </select>
++        </td>
++    </tr>
++    <tr>
++        <td>Enable MyList</td>
++        <td><input type="checkbox" name="listOption" value="listOption"/></td>
++    </tr>
++    <tr>
++        <td>Enable MyBanner</td>
++        <td><input type="checkbox" name="bannerOption" value="bannerOption"/></td>
++    </tr>
++
++</table>
+Index: src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp b/src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp
+new file mode 100644
+--- /dev/null	(date 1698755866560)
++++ b/src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp	(date 1698755866560)
+@@ -0,0 +1,88 @@
++<%--
++  Created by IntelliJ IDEA.
++  User: 袁文靖
++  Date: 2023-10-31
++  Time: 12:20
++  To change this template use File | Settings | File Templates.
++--%>
++
++<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
++<!-- 核心标签库-->
++<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
++<!-- 格式化标签库-->
++<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
++<!-- 函数标签库-->
++<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"  isELIgnored="false" %>
++
++
++<!DOCTYPE html>
++<html xmlns="http://www.w3.org/1999/xhtml">
++<head>
++   <link rel="StyleSheet" href="css/jpetstore.css" type="text/css" media="screen"/>
++    <meta name="generator" content="HTML Tidy for Linux/x86 (vers 1st November 2002), see www.w3.org"/>
++    <title>MyPetstore</title>
++    <meta content="text/html; charset=windows-1252" http-equiv="Content-Type"/>
++    <meta http-equiv="Cache-Control" content="max-age=0"/>
++    <meta http-equiv="Cache-Control" content="no-cache"/>
++    <meta http-equiv="expires" content="0"/>
++    <meta http-equiv="Expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
++    <meta http-equiv="Pragma" content="no-cache"/>
++
++</head>
++<body>
++<div id="Header">
++    <div id="Logo">
++        <div id="LogoContent">
++            <a href="${pageContext.request.contextPath}/index.html">
++                <img src="images/logo-topbar.gif"/>
++            </a>
++        </div>
++    </div>
++    <div id="Menu">
++        <div id="MenuContent">
++            <a href="${pageContext.request.contextPath}/viewCart">
++                <img align="middle" name="img_cart" src="images/cart.gif"/>
++            </a>
++            <img align="middle" src="images/separator.gif"/>
++            <c:if test="${sessionScope.user == null}">
++                <a href="${pageContext.request.contextPath}/login">Sign In</a>
++            </c:if>
++            <c:if test="${sessionScope.user != null}">
++                <a href="${pageContext.request.contextPath}/signOut">Sign Out</a>
++                <img align="middle" src="images/separator.gif"/>
++                <a href="${pageContext.request.contextPath}/editAccount">My Account</a>
++            </c:if>
++            <img align="middle" src="images/separator.gif"/>
++            <a href="${pageContext.request.contextPath}/help.html">?</a>
++        </div>
++    </div>
++    <div id="Search">
++        <div id="SearchContent">
++            <form action="searchProduct" method="post">
++                <input type="text" name="keyword" size="14"/>
++                <input type="submit" name="searchProducts" value="Search"/>
++            </form>
++        </div>
++    </div>
++    <div id="QuickLinks">
++        <a href="viewCategory?categoryId=FISH">
++            <img src="images/sm_fish.gif"/>
++        </a>
++        <img src="images/separator.gif"/>
++        <a href="viewCategory?categoryId=DOGS">
++            <img src="images/sm_dogs.gif"/>
++        </a>
++        <img src="images/separator.gif"/>
++        <a href="viewCategory?categoryId=REPTILES">
++            <img src="images/sm_reptiles.gif"/>
++        </a>
++        <img src="images/separator.gif"/>
++        <a href="viewCategory?categoryId=CATS">
++            <img src="images/sm_cats.gif"/>
++        </a>
++        <img src="images/separator.gif"/>
++        <a href="viewCategory?categoryId=BIRDS">
++            <img src="images/sm_birds.gif"/>
++        </a>
++    </div>
++</div>
+\ No newline at end of file
+Index: .idea/webContexts.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/webContexts.xml b/.idea/webContexts.xml
+new file mode 100644
+--- /dev/null	(date 1698726097089)
++++ b/.idea/webContexts.xml	(date 1698726097089)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="WebContextManager">
++    <option name="state">
++      <map>
++        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common" />
++      </map>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/servlet/RegisterServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/servlet/RegisterServlet.java b/src/main/java/servlet/RegisterServlet.java
+new file mode 100644
+--- /dev/null	(date 1698729404980)
++++ b/src/main/java/servlet/RegisterServlet.java	(date 1698729404980)
+@@ -0,0 +1,42 @@
++package servlet;
++
++import javax.servlet.ServletException;
++import javax.servlet.annotation.WebServlet;
++import javax.servlet.http.HttpServlet;
++import javax.servlet.http.HttpServletRequest;
++import javax.servlet.http.HttpServletResponse;
++import javax.servlet.http.HttpSession;
++import java.io.IOException;
++import java.util.ArrayList;
++import java.util.List;
++
++/**
++ * @author pp
++ */
++@WebServlet("/register")
++public class RegisterServlet extends HttpServlet {
++    private static final String REGISTER = "/WEB-INF/jsp/account/register.jsp";
++
++    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++        doGet(request,response);
++    }
++
++    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++        HttpSession session = request.getSession();
++
++        List<String> languages = new ArrayList<String>();
++        languages.add("English");
++        languages.add("Chinese");
++        session.setAttribute("languages",languages);
++
++        List<String> categories = new ArrayList<>();
++        categories.add("FISH");
++        categories.add("DOGS");
++        categories.add("REPTILES");
++        categories.add("CATS");
++        categories.add("BIRDS");
++        session.setAttribute("categories",categories);
++
++        request.getRequestDispatcher(REGISTER).forward(request,response);
++    }
++}
+Index: src/main/java/servlet/ValidateCodeServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/servlet/ValidateCodeServlet.java b/src/main/java/servlet/ValidateCodeServlet.java
+new file mode 100644
+--- /dev/null	(date 1698751375175)
++++ b/src/main/java/servlet/ValidateCodeServlet.java	(date 1698751375175)
+@@ -0,0 +1,118 @@
++package servlet;
++
++import javax.imageio.ImageIO;
++import javax.servlet.ServletException;
++import javax.servlet.ServletOutputStream;
++import javax.servlet.annotation.WebServlet;
++import javax.servlet.http.HttpServlet;
++import javax.servlet.http.HttpServletRequest;
++import javax.servlet.http.HttpServletResponse;
++import java.awt.*;
++import java.awt.image.BufferedImage;
++import java.io.IOException;
++import java.util.Random;
++
++/**
++ * @author pp
++ * 生成图形验证码
++ */
++@WebServlet("/ValidateCodeServlet")
++public class ValidateCodeServlet extends HttpServlet {
++    public static final String CHECK_CODE_KEY = "CHECK_CODE_KEY";
++    private static final long serialVersionUID = 1L;
++
++    //设置验证图片的宽度，高度，验证码个数
++    private int width = 152;
++    private int height = 35;
++    private int codeCount = 4;
++    //验证码字体高度
++    private int fontHeight = height - 2;
++    //验证码中的单个字符基线
++    private int codeX = width / (codeCount + 2);
++    private int codeY = height - 4;
++    //验证码由哪些字符组成
++    char[] codeSequence = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz23456789".toCharArray();
++
++    //初始化验证码图形属性
++    public void init() {
++        fontHeight = height - 2;
++        codeX = width / (codeCount + 2);
++        codeY = height - 4;
++    }
++
++    @Override
++    public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
++
++        BufferedImage buffImage = null;
++        buffImage = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
++
++// 在buffImage中创建一个2D的图像
++        Graphics2D graphics = null;
++        graphics = buffImage.createGraphics();
++
++// 设置背景颜色并绘制
++        graphics.setColor(Color.white);
++        graphics.fillRect(0, 0, width, height);
++
++        Font font = null;
++        font = new Font("", Font.BOLD, fontHeight);
++        graphics.setFont(font);
++
++// 绘制验证码背景的矩形边框
++        graphics.setColor(Color.BLACK);
++        graphics.drawRect(0, 0, width - 1, height - 1);
++
++        Random random = new Random();
++
++// 生成并绘制随机的干扰线
++        graphics.setColor(Color.GREEN);
++        for (int i = 0; i < 15; i++) {
++            int x = random.nextInt(width);
++            int y = random.nextInt(height);
++            int xl = random.nextInt(20);
++            int yl = random.nextInt(20);
++            graphics.drawLine(x, y, x + xl, y + yl);
++        }
++
++// 在矩形区域内绘制随机颜色的噪点
++        for (int i = 0; i < 50; i++) {
++            int x = random.nextInt(width);
++            int y = random.nextInt(height);
++            graphics.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));  // 随机颜色
++            graphics.fillRect(x, y, 2, 2);  // 绘制2x2的噪点
++        }
++
++// 生成验证码
++        StringBuffer randomCode = new StringBuffer();
++        for (int i = 0; i < codeCount; i++) {
++            String strRand = String.valueOf(codeSequence[random.nextInt(36)]);
++            // 每个字符使用随机颜色进行绘制
++            graphics.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
++            graphics.drawString(strRand, (i + 1) * codeX+4, codeY);
++            randomCode.append(strRand);
++        }
++
++// 将生成的验证码存储到session中，以便后续验证
++        req.getSession().setAttribute(CHECK_CODE_KEY, randomCode.toString());
++
++// 设置响应头，禁止图像缓存
++        resp.setHeader("Pragma", "no-cache");
++        resp.setHeader("Cache-Control", "no-cache");
++        resp.setDateHeader("Expires", 0);
++
++// 将图像写入到输出流
++        ServletOutputStream sos = resp.getOutputStream();
++        ImageIO.write(buffImage, "jpeg", sos);
++        sos.close();
++    }
++
++    @Override
++    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
++        doPost(req, resp);
++    }
++
++    @Override
++    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
++
++    }
++}
+\ No newline at end of file
+Index: .idea/uiDesigner.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/uiDesigner.xml b/.idea/uiDesigner.xml
+new file mode 100644
+--- /dev/null	(date 1698741704437)
++++ b/.idea/uiDesigner.xml	(date 1698741704437)
+@@ -0,0 +1,124 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Palette2">
++    <group name="Swing">
++      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
++      </item>
++      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.png" removable="false" auto-create-binding="false" can-attach-label="true">
++        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
++        <initial-values>
++          <property name="text" value="Button" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="RadioButton" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="CheckBox" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="Label" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
++          <preferred-size width="-1" height="20" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
++      </item>
++    </group>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/resources/dataBaseConfig.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/main/resources/dataBaseConfig.properties b/src/main/resources/dataBaseConfig.properties
+new file mode 100644
+--- /dev/null	(date 1698746593517)
++++ b/src/main/resources/dataBaseConfig.properties	(date 1698746593517)
+@@ -0,0 +1,28 @@
++# ???????
++druid.datasource.name=jpetStoreDataSource
++# JDBC??
++url=jdbc:mysql://localhost:3306/jpetstore?rewriteBatchedStatements=true
++# ???
++username=root
++# ??
++password=pp041572
++# ????
++driverClassName=com.mysql.cj.jdbc.Driver
++# ?????
++maxActive=300
++# ?????
++minIdle=20
++# ??????
++maxWait=10000
++#????????????????????
++testOnBorrow=true
++# ???????????????
++testOnReturn=false
++# ??????????????
++timeBetweenEvictionRunsMillis=60000
++# ?????????????
++numTestsPerEvictionRun=10
++# ???????????????????
++minEvictableIdleTimeMillis=300000
++# ????????????
++connection-leak-enable=true
+Index: src/main/webapp/WEB-INF/jsp/catalog/Main.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/WEB-INF/jsp/catalog/Main.jsp b/src/main/webapp/WEB-INF/jsp/catalog/Main.jsp
+new file mode 100644
+--- /dev/null	(date 1698741764377)
++++ b/src/main/webapp/WEB-INF/jsp/catalog/Main.jsp	(date 1698741764377)
+@@ -0,0 +1,67 @@
++<%--
++  Created by IntelliJ IDEA.
++  User: 袁文靖
++  Date: 2023-10-31
++  Time: 16:42
++  To change this template use File | Settings | File Templates.
++--%>
++<%@include file="../common/IncludeTop.jsp"%>
++
++<c:if test="${sessionScope.account == null}">
++  <div id="Welcome">
++    <div id="WelcomeContent">
++      Welcome to MyPetStore!
++    </div>
++  </div>
++</c:if>
++<c:if test="${sessionScope.account != null}">
++  <div id="Welcome">
++    <div id="WelcomeContentForAccount">
++      Welcome ${sessionScope.account.username}!
++    </div>
++  </div>
++</c:if>
++
++<div id="Main">
++  <div id="Sidebar">
++    <div id="SidebarContent">
++      <a href="viewCategory?categoryId=FISH">
++        <img src="images/fish_icon.gif" />
++      </a>
++      <br/> Saltwater, Freshwater <br/>
++      <a href="viewCategory?categoryId=DOGS">
++        <img src="images/dogs_icon.gif" />
++      </a>
++      <br /> Various Breeds <br />
++      <a href="viewCategory?categoryId=CATS">
++        <img src="images/cats_icon.gif" />
++      </a>
++      <br /> Various Breeds, Exotic Varieties <br />
++      <a href="viewCategory?categoryId=REPTILES">
++        <img src="images/reptiles_icon.gif" />
++      </a>
++      <br /> Lizards, Turtles, Snakes <br />
++      <a href="viewCategory?categoryId=BIRDS">
++        <img src="images/birds_icon.gif" />
++      </a>
++      <br /> Exotic Varieties
++    </div>
++  </div>
++
++  <div id="MainImage">
++    <div id="MainImageContent">
++      <map name="estoremap">
++        <area alt="Birds" coords="72,2,280,250" href="viewCategory?categoryId=BIRDS" shape="rect" />
++        <area alt="Fish" coords="2,180,72,250" href="viewCategory?categoryId=FISH" shape="rect" />
++        <area alt="Dogs" coords="60,250,130,320" href="viewCategory?categoryId=DOGS" shape="rect" />
++        <area alt="Reptiles" coords="140,270,210,340" href="viewCategory?categoryId=REPTILES" shape="rect" />
++        <area alt="Cats" coords="225,240,295,310" href="viewCategory?categoryId=CATS" shape="rect" />
++        <area alt="Birds" coords="280,180,350,250" href="viewCategory?categoryId=BIRDS" shape="rect" />
++      </map>
++      <img height="355" src="images/splash.gif" align="middle" usemap="#estoremap" width="350" />
++    </div>
++  </div>
++  <div id="Separator">&nbsp;</div>
++</div>
++
++<%@include file="../common/IncludeBottom.jsp"%>
+\ No newline at end of file
+Index: src/main/java/servlet/LoginServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/servlet/LoginServlet.java b/src/main/java/servlet/LoginServlet.java
+new file mode 100644
+--- /dev/null	(date 1698747403266)
++++ b/src/main/java/servlet/LoginServlet.java	(date 1698747403266)
+@@ -0,0 +1,59 @@
++package servlet;
++
++import domain.User;
++import service.AccountService;
++
++import javax.servlet.ServletException;
++import javax.servlet.annotation.WebServlet;
++import javax.servlet.http.HttpServlet;
++import javax.servlet.http.HttpServletRequest;
++import javax.servlet.http.HttpServletResponse;
++import javax.servlet.http.HttpSession;
++import java.io.IOException;
++
++/**
++ * @author pp
++ */
++@WebServlet("/login")
++public class LoginServlet extends HttpServlet {
++    private static final String MAIN = "/WEB-INF/jsp/catalog/Main.jsp";
++    private static final String LOGIN = "/WEB-INF/jsp/account/login.jsp";
++    AccountService accountService = new AccountService();
++
++    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++        doGet(request, response);
++    }
++
++    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++        String account = request.getParameter("account");
++        String password = request.getParameter("password");
++        if (account == null || password == null) {
++            request.getRequestDispatcher(LOGIN).forward(request, response);
++            return;
++        }
++        //验证码校验：
++        String checkCode=request.getParameter("checkCode");
++        HttpSession session=request.getSession();
++        String sessionCode=(String)session.getAttribute("CHECK_CODE_KEY");
++        //校验验证码
++        if (!checkCode.equals(sessionCode))
++        {
++            request.setAttribute("errorMsg","1");
++            request.getRequestDispatcher(LOGIN).forward(request, response);
++            return;
++        }
++
++        User user = accountService.getAccount(account, password);
++
++        if (user == null) {
++            request.setAttribute("errorMsg","2");
++            request.getRequestDispatcher(LOGIN).forward(request, response);
++            return;
++        }
++        else {
++            session.setAttribute("user", user);
++            request.getRequestDispatcher(MAIN).forward(request, response);
++        }
++
++    }
++}
+Index: src/main/java/servlet/NewAccountServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/servlet/NewAccountServlet.java b/src/main/java/servlet/NewAccountServlet.java
+new file mode 100644
+--- /dev/null	(date 1698756123827)
++++ b/src/main/java/servlet/NewAccountServlet.java	(date 1698756123827)
+@@ -0,0 +1,102 @@
++package servlet;
++
++import domain.User;
++import service.AccountService;
++
++import javax.servlet.ServletException;
++import javax.servlet.annotation.WebServlet;
++import javax.servlet.http.HttpServlet;
++import javax.servlet.http.HttpServletRequest;
++import javax.servlet.http.HttpServletResponse;
++import javax.servlet.http.HttpSession;
++import java.io.IOException;
++
++/**
++ * @author pp
++ */
++@WebServlet("/NewAccount")
++public class NewAccountServlet
++        extends HttpServlet {
++    private static final String LOGIN = "/WEB-INF/jsp/account/login.jsp";
++    private static final String REGISTER = "/WEB-INF/jsp/account/register.jsp";
++
++    private User user;
++
++    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++        doGet(request,response);
++    }
++
++    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++        //验证码校验：
++        String checkCode=request.getParameter("checkCode");
++        HttpSession session=request.getSession();
++        String sessionCode=(String)session.getAttribute("CHECK_CODE_KEY");
++        //校验验证码
++        if (!checkCode.equals(sessionCode))
++        {
++            request.setAttribute("errorMsg","1");
++            request.getRequestDispatcher(REGISTER).forward(request, response);
++            return;
++        }
++        String username = request.getParameter("account");
++        String password = request.getParameter("password");
++        String repeatedPassword = request.getParameter("repeatedPassword");
++        String firstName = request.getParameter("firstName");
++        String lastName = request.getParameter("lastName");
++        String email = request.getParameter("email");
++        String phone = request.getParameter("phone");
++        String address1 = request.getParameter("address1");
++        String address2 = request.getParameter("address2");
++        String city = request.getParameter("city");
++        String state = request.getParameter("state");
++        String zip = request.getParameter("zip");
++        String country = request.getParameter("country");
++        String languages = request.getParameter("languagePreference");
++        String categories = request.getParameter("favouriteCategoryId");
++
++        boolean listOption;
++        if(request.getParameter("listOption") != null){
++            listOption =  true;
++        }else{
++            listOption = false;
++        }
++
++        boolean bannerOption;
++        if(request.getParameter("bannerOption") != null){
++            bannerOption =  true;
++        }else{
++            bannerOption = false;
++        }
++
++        if(password.equals(repeatedPassword)){
++            user = new User();
++
++            user.setUsername(username);
++            user.setPassword(password);
++            user.setFirstName(firstName);
++            user.setLastName(lastName);
++            user.setEmail(email);
++            user.setPhone(phone);
++            user.setAddress1(address1);
++            user.setAddress2(address2);
++            user.setCity(city);
++            user.setState(state);
++            user.setZip(zip);
++            user.setCountry(country);
++            user.setLanguagePreference(languages);
++            user.setFavouriteCategoryId(categories);
++            user.setListOption(listOption);
++            user.setBannerOption(bannerOption);
++
++            AccountService accountService = new AccountService();
++            accountService.insertAccount(user);
++
++            request.getRequestDispatcher(LOGIN).forward(request,response);
++        } else {
++            request.setAttribute("errorMsg","2");
++            request.getRequestDispatcher(REGISTER).forward(request, response);
++            return;
++        }
++
++    }
++}
+Index: src/main/java/persistence/Imp/AccountDAOImp.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/persistence/Imp/AccountDAOImp.java b/src/main/java/persistence/Imp/AccountDAOImp.java
+new file mode 100644
+--- /dev/null	(date 1698752440505)
++++ b/src/main/java/persistence/Imp/AccountDAOImp.java	(date 1698752440505)
+@@ -0,0 +1,293 @@
++package persistence.Imp;
++
++import domain.User;
++import persistence.AccountDAO;
++import persistence.DatabaseUtil;
++
++import java.sql.Connection;
++import java.sql.PreparedStatement;
++import java.sql.ResultSet;
++import static persistence.DatabaseUtil.close;
++import static persistence.DatabaseUtil.getConnection;
++
++/**
++ * @author pp
++ * 有关账户的数据库操作的实现类
++ * 待优化：对于更新数据的操作使用事务机制
++ */
++@SuppressWarnings({"all"})
++public class AccountDAOImp implements AccountDAO {
++    private static final String getAccountByUsername = "SELECT SIGNON.USERNAME,ACCOUNT.EMAIL,ACCOUNT.FIRSTNAME,ACCOUNT.LASTNAME,ACCOUNT.STATUS,ACCOUNT.ADDR1 AS address1," +
++            "ACCOUNT.ADDR2 AS address2,ACCOUNT.CITY,ACCOUNT.STATE,ACCOUNT.ZIP,ACCOUNT.COUNTRY,ACCOUNT.PHONE,PROFILE.LANGPREF AS languagePreference," +
++            "PROFILE.FAVCATEGORY AS favouriteCategoryId,PROFILE.MYLISTOPT AS listOption,PROFILE.BANNEROPT AS bannerOption,BANNERDATA.BANNERNAME " +
++            "FROM ACCOUNT, PROFILE, SIGNON, BANNERDATA " +
++            "WHERE ACCOUNT.USERID = ? AND SIGNON.USERNAME = ACCOUNT.USERID AND PROFILE.USERID = ACCOUNT.USERID AND PROFILE.FAVCATEGORY = BANNERDATA.FAVCATEGORY";
++
++    private static final String getAccountByUsernameAndPassword = "SELECT SIGNON.USERNAME,ACCOUNT.EMAIL,ACCOUNT.FIRSTNAME,ACCOUNT.LASTNAME,ACCOUNT.STATUS,ACCOUNT.ADDR1 AS address1," +
++            "ACCOUNT.ADDR2 AS address2,ACCOUNT.CITY,ACCOUNT.STATE,ACCOUNT.ZIP,ACCOUNT.COUNTRY,ACCOUNT.PHONE,PROFILE.LANGPREF AS languagePreference," +
++            "PROFILE.FAVCATEGORY AS favouriteCategoryId,PROFILE.MYLISTOPT AS listOption,PROFILE.BANNEROPT AS bannerOption,BANNERDATA.BANNERNAME " +
++            "FROM ACCOUNT, PROFILE, SIGNON, BANNERDATA WHERE ACCOUNT.USERID = ? AND SIGNON.PASSWORD = ? " +
++            "AND SIGNON.USERNAME = ACCOUNT.USERID AND PROFILE.USERID = ACCOUNT.USERID AND PROFILE.FAVCATEGORY = BANNERDATA.FAVCATEGORY";
++
++    private static final String updateAccount = "UPDATE ACCOUNT SET EMAIL = ?,FIRSTNAME = ?,LASTNAME = ?,STATUS = ?,ADDR1 = ?," +
++            "ADDR2 = ?,CITY = ?,STATE = ?,ZIP = ?,COUNTRY = ?,PHONE = ? WHERE USERID = ?";
++
++    private static final String insertAccount = "INSERT INTO ACCOUNT (EMAIL, FIRSTNAME, LASTNAME, STATUS, ADDR1, ADDR2, CITY, STATE, ZIP, COUNTRY, PHONE, USERID) VALUES" +
++            "(?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?)";
++
++    private static final String updateProfile = "UPDATE PROFILE SET LANGPREF = ?, FAVCATEGORY = ?,mylistopt = ?,banneropt = ? WHERE USERID = ?";
++
++    private static final String insertProfile = "INSERT INTO PROFILE (LANGPREF, FAVCATEGORY, USERID, mylistopt, banneropt) VALUES (?, ?, ?, ?, ?)";
++
++    private static final String updateSignon = "UPDATE SIGNON SET PASSWORD = ? WHERE USERNAME = ?";
++
++    private static final String insertSignon = "INSERT INTO SIGNON (PASSWORD,USERNAME) VALUES (?, ?)";
++
++    @Override
++    public User getAccountByUsername(String username) {
++        User user = null;
++
++        try {
++            Connection connection = getConnection();
++            PreparedStatement preparedStatement = connection.prepareStatement(getAccountByUsername);
++            preparedStatement.setString(1,username);
++            ResultSet resultSet = preparedStatement.executeQuery();
++
++            if(resultSet.next()){
++                user = new User();
++                user.setUsername(resultSet.getString(1));
++                user.setEmail(resultSet.getString(2));
++                user.setFirstName(resultSet.getString(3));
++                user.setLastName(resultSet.getString(4));
++                user.setStatus(resultSet.getString(5));
++                user.setAddress1(resultSet.getString(6));
++                user.setAddress2(resultSet.getString(7));
++                user.setCity(resultSet.getString(8));
++                user.setState(resultSet.getString(9));
++                user.setZip(resultSet.getString(10));
++                user.setCountry(resultSet.getString(11));
++                user.setPhone(resultSet.getString(12));
++                user.setLanguagePreference(resultSet.getString(13));
++                user.setFavouriteCategoryId(resultSet.getString(14));
++                user.setListOption(resultSet.getInt(15) == 1);
++                user.setBannerOption(resultSet.getInt(16) == 1);
++                user.setBannerName(resultSet.getString(18));
++
++                close(resultSet,preparedStatement,connection);
++
++            }
++        }catch (Exception e){
++            e.printStackTrace();
++        }
++        return user;
++    }
++
++    @Override
++    public User getAccountByUsernameAndPassword(User user) {
++        User checkUser = null;
++        try {
++            Connection connection = DatabaseUtil.getConnection();
++            PreparedStatement preparedStatement = connection.prepareStatement(getAccountByUsernameAndPassword);
++            preparedStatement.setString(1, user.getUsername());
++            preparedStatement.setString(2, user.getPassword());
++            ResultSet resultSet = preparedStatement.executeQuery();
++
++            if(resultSet.next()){
++                System.out.println("有数据");
++                checkUser = new User();
++                checkUser.setUsername(resultSet.getString(1));
++                checkUser.setEmail(resultSet.getString(2));
++                checkUser.setFirstName(resultSet.getString(3));
++                checkUser.setLastName(resultSet.getString(4));
++                checkUser.setStatus(resultSet.getString(5));
++                checkUser.setAddress1(resultSet.getString(6));
++                checkUser.setAddress2(resultSet.getString(7));
++                checkUser.setCity(resultSet.getString(8));
++                checkUser.setState(resultSet.getString(9));
++                checkUser.setZip(resultSet.getString(10));
++                checkUser.setCountry(resultSet.getString(11));
++                checkUser.setPhone(resultSet.getString(12));
++                checkUser.setLanguagePreference(resultSet.getString(13));
++                checkUser.setFavouriteCategoryId(resultSet.getString(14));
++                checkUser.setListOption((resultSet.getInt(15) == 1));
++                checkUser.setBannerOption((resultSet.getInt(16) == 1));
++                checkUser.setBannerName(resultSet.getString(17));
++
++                close(resultSet,preparedStatement,connection);
++
++            }
++            else
++            {
++                System.out.println("没数据");
++            }
++        }catch (Exception e){
++            e.printStackTrace();
++        }
++        return checkUser;
++    }
++
++    @Override
++    public boolean insertAccount(User user) {
++        boolean flag = false;
++
++        try {
++            Connection connection = getConnection();
++            PreparedStatement preparedStatement = connection.prepareStatement(insertAccount);
++            preparedStatement.setString(1, user.getEmail());
++            preparedStatement.setString(2, user.getFirstName());
++            preparedStatement.setString(3, user.getLastName());
++            preparedStatement.setString(4, user.getStatus());
++            preparedStatement.setString(5, user.getAddress1());
++            preparedStatement.setString(6, user.getAddress2());
++            preparedStatement.setString(7, user.getCity());
++            preparedStatement.setString(8, user.getState());
++            preparedStatement.setString(9, user.getZip());
++            preparedStatement.setString(10, user.getCountry());
++            preparedStatement.setString(11, user.getPhone());
++            preparedStatement.setString(12, user.getUsername());
++            int row = preparedStatement.executeUpdate();
++
++            if(row == 1){
++                flag = true;
++            }
++
++            close(null,preparedStatement,connection);
++        } catch (Exception e){
++            e.printStackTrace();
++        }
++
++
++        return flag;
++    }
++
++    @Override
++    public boolean insertProfile(User user) {
++        boolean flag = false;
++
++        try {
++            Connection connection = getConnection();
++            PreparedStatement preparedStatement = connection.prepareStatement(insertProfile);
++            preparedStatement.setString(1, user.getLanguagePreference());
++            preparedStatement.setString(2, user.getFavouriteCategoryId());
++            preparedStatement.setString(3, user.getUsername());
++            preparedStatement.setInt(4,(user.isListOption())?1:0);
++            preparedStatement.setInt(5,(user.isBannerOption())?1:0);
++            int row = preparedStatement.executeUpdate();
++
++            if(row == 1){
++                flag = true;
++            }
++            close(null,preparedStatement,connection);
++        }catch (Exception e){
++            e.printStackTrace();
++        }
++        return flag;
++    }
++
++    @Override
++    public boolean insertSignon(User user) {
++        boolean flag = false;
++        try {
++            Connection connection = getConnection();
++            PreparedStatement preparedStatement = connection.prepareStatement(insertSignon);
++            preparedStatement.setString(1, user.getPassword());
++            preparedStatement.setString(2, user.getUsername());
++            int row = preparedStatement.executeUpdate();
++
++            if(row == 1){
++                flag = true;
++            }
++
++          close(null,preparedStatement,connection);
++        }catch (Exception e){
++            e.printStackTrace();
++        }
++        return flag;
++    }
++
++    @Override
++    public boolean updateAccount(User user) {
++        boolean flag = false;
++
++        try {
++            Connection connection = getConnection();
++            PreparedStatement preparedStatement = connection.prepareStatement(updateAccount);
++            preparedStatement.setString(1, user.getEmail());
++            preparedStatement.setString(2, user.getFirstName());
++            preparedStatement.setString(3, user.getLastName());
++            preparedStatement.setString(4, user.getStatus());
++            preparedStatement.setString(5, user.getAddress1());
++            preparedStatement.setString(6, user.getAddress2());
++            preparedStatement.setString(7, user.getCity());
++            preparedStatement.setString(8, user.getState());
++            preparedStatement.setString(9, user.getZip());
++            preparedStatement.setString(10, user.getCountry());
++            preparedStatement.setString(11, user.getPhone());
++            preparedStatement.setString(12, user.getUsername());
++            int row = preparedStatement.executeUpdate();
++
++            if(row == 1){
++                flag = true;
++            }
++
++            close(null,preparedStatement,connection);
++        } catch (Exception e){
++            e.printStackTrace();
++        }
++        return flag;
++    }
++
++    @Override
++    public boolean updateProfile(User user) {
++        boolean flag = false;
++        //updateProfile
++        //UPDATE PROFILE SET LANGPREF = ?, FAVCATEGORY = ?,mylistopt = ?,banneropt = ? WHERE USERID = ?
++
++        try{
++            Connection connection = getConnection();
++            PreparedStatement preparedStatement = connection.prepareStatement(updateProfile);
++            preparedStatement.setString(1, user.getLanguagePreference());
++            preparedStatement.setString(2, user.getFavouriteCategoryId());
++            preparedStatement.setInt(3, user.isListOption()?1:0);
++            preparedStatement.setInt(4, user.isBannerOption()?1:0);
++            preparedStatement.setString(5, user.getUsername());
++
++            int row = preparedStatement.executeUpdate();
++
++            if(row == 1){
++                flag = true;
++            }
++
++            close(null,preparedStatement,connection);
++        } catch (Exception e){
++            e.printStackTrace();
++        }
++
++        return flag;
++    }
++
++    @Override
++    public boolean updateSignon(User user) {
++        //UPDATE SIGNON SET PASSWORD = ? WHERE USERNAME = ?
++        boolean flag = false;
++        try{
++            Connection connection = getConnection();
++            PreparedStatement preparedStatement = connection.prepareStatement(updateSignon);
++            preparedStatement.setString(1, user.getPassword());
++            preparedStatement.setString(2, user.getUsername());
++
++            int row = preparedStatement.executeUpdate();
++
++            if(row == 1){
++                flag = true;
++            }
++
++            close(null,preparedStatement,connection);
++        } catch (Exception e){
++            e.printStackTrace();
++        }
++
++        return flag;
++
++    }
++}
+Index: src/main/webapp/WEB-INF/jsp/common/Error.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/WEB-INF/jsp/common/Error.jsp b/src/main/webapp/WEB-INF/jsp/common/Error.jsp
+new file mode 100644
+--- /dev/null	(date 1698728697350)
++++ b/src/main/webapp/WEB-INF/jsp/common/Error.jsp	(date 1698728697350)
+@@ -0,0 +1,18 @@
++<%--
++  Created by IntelliJ IDEA.
++  User: 袁文靖
++  Date: 2023-10-31
++  Time: 12:19
++  To change this template use File | Settings | File Templates.
++--%>
++<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
++<!-- 核心标签库-->
++<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
++<!-- 格式化标签库-->
++<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
++<!-- 函数标签库-->
++<%@ include file="../common/IncludeTop.jsp"%>
++
++${sessionScope.message}
++
++<%@ include file="../common/IncludeBottom.jsp"%>
+\ No newline at end of file
+Index: src/main/java/service/AccountService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/service/AccountService.java b/src/main/java/service/AccountService.java
+new file mode 100644
+--- /dev/null	(date 1698741703968)
++++ b/src/main/java/service/AccountService.java	(date 1698741703968)
+@@ -0,0 +1,44 @@
++package service;
++
++import domain.User;
++import persistence.AccountDAO;
++import persistence.Imp.AccountDAOImp;
++
++/**
++ * @author pp
++ */
++public class AccountService {
++    private AccountDAO accountDAO;
++
++    public AccountService(){
++        accountDAO = new AccountDAOImp();
++    }
++
++    public User getAccount(String username) {
++        return accountDAO.getAccountByUsername(username);
++    }
++
++    //根据账号密码获取用户详细信息
++    public User getAccount(String username, String password) {
++        User user= new User();
++        user.setUsername(username);
++        user.setPassword(password);
++        return accountDAO.getAccountByUsernameAndPassword(user);
++    }
++
++    public void insertAccount(User user) {
++        accountDAO.insertAccount(user);
++        accountDAO.insertProfile(user);
++        accountDAO.insertSignon(user);
++    }
++
++    public void updateAccount(User user) {
++        accountDAO.updateAccount(user);
++        accountDAO.updateProfile(user);
++
++        if (user.getPassword() != null && user.getPassword().length() > 0) {
++            accountDAO.updateSignon(user);
++        }
++    }
++
++}
+Index: src/main/webapp/WEB-INF/jsp/account/login.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/WEB-INF/jsp/account/login.jsp b/src/main/webapp/WEB-INF/jsp/account/login.jsp
+new file mode 100644
+--- /dev/null	(date 1698753083334)
++++ b/src/main/webapp/WEB-INF/jsp/account/login.jsp	(date 1698753083334)
+@@ -0,0 +1,155 @@
++<%--
++  Created by IntelliJ IDEA.
++  User: 袁文靖
++  Date: 2023-10-31
++  Time: 16:29
++  To change this template use File | Settings | File Templates.
++--%>
++
++<%--
++  Created by IntelliJ IDEA.
++  User: 袁文靖
++  Date: 2023-10-31
++  Time: 16:29
++  To change this template use File | Settings | File Templates.
++--%>
++
++<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
++<!-- 核心标签库-->
++<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
++<!-- 格式化标签库-->
++<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
++<!-- 函数标签库-->
++<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
++<html>
++<head>
++    <title>登录</title>
++    <style>
++        body {
++            background-color: #f2f2f2;
++            font-family: Arial, sans-serif;
++        }
++
++        .container {
++            max-width: 400px;
++            margin: 0 auto;
++            padding: 40px;
++            background-color: #fff;
++            border-radius: 5px;
++            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
++            display: flex;               /* 添加此行 */
++            flex-direction: column;      /* 添加此行 */
++            justify-content: center;     /* 添加此行 */
++            align-items: center;         /* 添加此行 */
++        }
++
++        h2 {
++            text-align: center;
++            color: #333;
++        }
++
++        .form-group {
++            margin-bottom: 20px;
++        }
++
++        label,
++        input {
++            display: block;
++            width: 100%;
++        }
++
++        label {
++            margin-bottom: 5px;
++            font-weight: bold;
++            color: #666;
++        }
++
++        input[type="text"],
++        input[type="password"] {
++            padding: 10px;
++            border: 1px solid #ccc;
++            border-radius: 3px;
++        }
++
++        .btn-group {
++            text-align: center;
++        }
++
++        .btn {
++            display: inline-block;
++            padding: 8px 16px;
++            font-size: 14px;
++            text-align: center;
++            cursor: pointer;
++            color: #fff;
++            background-color: #4CAF50;
++            border: none;
++            border-radius: 3px;
++        }
++
++        .btn-reset {
++            background-color: #ccc;
++        }
++
++        .form-group.checkbox {
++            display: flex;
++            align-items: center;
++        }
++
++        .form-group.checkbox label {
++            margin-right: 10px;
++        }
++    </style>
++</head>
++<body>
++<div class="container">
++    <h2>登录</h2>
++    <form action="${pageContext.request.contextPath}/login" method="post" onsubmit="return validateForm()">
++        <div class="form-group">
++            <label for="account">账号</label>
++            <input type="text" id="account" name="account" value="${cookie.user.account}" required>
++        </div>
++        <div class="form-group">
++            <label for="password">密码</label>
++            <input type="password" id="password" name="password" value="" required><br>
++        </div>
++        <div class="form-group">
++            <label>验证码:</label>
++            <span style="display: flex; align-items: center;">
++                <input type="text" name="checkCode">
++                <img alt="验证码" src="${pageContext.request.contextPath}/ValidateCodeServlet" style="margin-left: 10px;">
++            </span>
++        </div>
++
++        <div class="btn-group">
++            <input type="submit" value="登录" class="btn">
++            <input type="reset" value="重置" class="btn btn-reset">
++            <a href="${pageContext.request.contextPath}/register" class="register-link">没有账号？点击注册</a>
++        </div>
++    </form>
++    <p id="error-message" class="error-message"></p>
++    <script>
++        function validateForm() {
++            const username = document.getElementById("account").value;
++            const password = document.getElementById("password").value;
++            const checkCode = document.getElementsByName("checkCode")[0].value;
++
++            if (username.trim() === "" || password.trim() === "" || checkCode.trim() === "") {
++                alert("账号、密码或验证码不能为空");
++                return false;
++            }
++            return true;
++        }
++
++        const error = "${errorMsg}";
++        if (error === '1') {
++            alert("验证码错误")
++        } else if (error === '2') {
++            alert("账号或密码错误")
++        }
++
++    </script>
++</div>
++
++</body>
++</html>
+\ No newline at end of file
+Index: src/main/java/domain/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/domain/User.java b/src/main/java/domain/User.java
+new file mode 100644
+--- /dev/null	(date 1698741703958)
++++ b/src/main/java/domain/User.java	(date 1698741703958)
+@@ -0,0 +1,179 @@
++package domain;
++
++import java.io.Serializable;
++
++/**
++ * @author pp
++ * 账号类
++ */
++@SuppressWarnings({"all"})
++public class User implements Serializable {
++
++    private static final long serialVersionUID = 8751282105532159742L;
++
++    private String username;//用户名
++    private String password;//密码
++    private String email;//邮箱
++    private String firstName;//名
++    private String lastName;//姓
++    private String status;//状态
++    private String address1;//地址1
++    private String address2;//地址2
++    private String city;//城市
++    private String state;//省
++    private String zip;//邮政编码
++    private String country;//国家
++    private String phone;//电话号码
++    private String favouriteCategoryId;//喜欢的类别
++    private String languagePreference;//语言偏好
++    private boolean listOption;//是否接受邮件
++    private boolean bannerOption;//是否接受广告
++    private String bannerName;//横幅名称
++
++    public String getUsername() {
++        return username;
++    }
++
++    public void setUsername(String username) {
++        this.username = username;
++    }
++
++    public String getPassword() {
++        return password;
++    }
++
++    public void setPassword(String password) {
++        this.password = password;
++    }
++
++    public String getEmail() {
++        return email;
++    }
++
++    public void setEmail(String email) {
++        this.email = email;
++    }
++
++    public String getFirstName() {
++        return firstName;
++    }
++
++
++    public void setFirstName(String firstName) {
++        this.firstName = firstName;
++    }
++
++    public String getLastName() {
++        return lastName;
++    }
++
++
++    public void setLastName(String lastName) {
++        this.lastName = lastName;
++    }
++
++    public String getStatus() {
++        return status;
++    }
++
++    public void setStatus(String status) {
++        this.status = status;
++    }
++
++    public String getAddress1() {
++        return address1;
++    }
++
++    public void setAddress1(String address1) {
++        this.address1 = address1;
++    }
++
++    public String getAddress2() {
++        return address2;
++    }
++
++    public void setAddress2(String address2) {
++        this.address2 = address2;
++    }
++
++    public String getCity() {
++        return city;
++    }
++
++    public void setCity(String city) {
++        this.city = city;
++    }
++
++    public String getState() {
++        return state;
++    }
++
++    public void setState(String state) {
++        this.state = state;
++    }
++
++    public String getZip() {
++        return zip;
++    }
++
++    public void setZip(String zip) {
++        this.zip = zip;
++    }
++
++    public String getCountry() {
++        return country;
++    }
++
++    public void setCountry(String country) {
++        this.country = country;
++    }
++
++    public String getPhone() {
++        return phone;
++    }
++
++    public void setPhone(String phone) {
++        this.phone = phone;
++    }
++
++    public String getFavouriteCategoryId() {
++        return favouriteCategoryId;
++    }
++
++    public void setFavouriteCategoryId(String favouriteCategoryId) {
++        this.favouriteCategoryId = favouriteCategoryId;
++    }
++
++    public String getLanguagePreference() {
++        return languagePreference;
++    }
++
++    public void setLanguagePreference(String languagePreference) {
++        this.languagePreference = languagePreference;
++    }
++
++    public boolean isListOption() {
++        return listOption;
++    }
++
++    public void setListOption(boolean listOption) {
++        this.listOption = listOption;
++    }
++
++    public boolean isBannerOption() {
++        return bannerOption;
++    }
++
++    public void setBannerOption(boolean bannerOption) {
++        this.bannerOption = bannerOption;
++    }
++
++    public String getBannerName() {
++        return bannerName;
++    }
++
++    public void setBannerName(String bannerName) {
++        this.bannerName = bannerName;
++    }
++
++}
+Index: src/main/java/persistence/AccountDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/persistence/AccountDAO.java b/src/main/java/persistence/AccountDAO.java
+new file mode 100644
+--- /dev/null	(date 1698741704043)
++++ b/src/main/java/persistence/AccountDAO.java	(date 1698741704043)
+@@ -0,0 +1,25 @@
++package persistence;
++
++import domain.User;
++
++/**
++ * @author pp
++ * 有关账户的数据库操作接口
++ */
++public interface AccountDAO {
++    User getAccountByUsername(String username);
++
++    User getAccountByUsernameAndPassword(User user);
++
++    boolean insertAccount(User user);
++
++    boolean insertProfile(User user);
++
++    boolean insertSignon(User user);
++
++    boolean updateAccount(User user);
++
++    boolean updateProfile(User user);
++
++    boolean updateSignon(User user);
++}
+Index: src/main/webapp/WEB-INF/jsp/account/register.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/WEB-INF/jsp/account/register.jsp b/src/main/webapp/WEB-INF/jsp/account/register.jsp
+new file mode 100644
+--- /dev/null	(date 1698756164053)
++++ b/src/main/webapp/WEB-INF/jsp/account/register.jsp	(date 1698756164053)
+@@ -0,0 +1,141 @@
++<%--
++  Created by IntelliJ IDEA.
++  User: 袁文靖
++  Date: 2023-10-31
++  Time: 13:09
++  To change this template use File | Settings | File Templates.
++--%>
++
++
++<%@ include file="../common/IncludeTop.jsp" %>
++<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
++<style>
++    body {
++        background-color: #f2f2f2;
++        font-family: Arial, sans-serif;
++    }
++
++    .container {
++        max-width: 400px;
++        margin: 0 auto;
++        padding: 40px;
++        background-color: #fff;
++        border-radius: 5px;
++        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
++        display: flex; /* 添加此行 */
++        flex-direction: column; /* 添加此行 */
++        justify-content: center; /* 添加此行 */
++        align-items: center; /* 添加此行 */
++    }
++
++    h2 {
++        text-align: center;
++        color: #333;
++    }
++
++    .form-group {
++        margin-bottom: 20px;
++    }
++
++    label,
++    input {
++        display: block;
++        width: 100%;
++    }
++
++    label {
++        margin-bottom: 5px;
++        font-weight: bold;
++        color: #666;
++    }
++
++    input[type="text"],
++    input[type="password"] {
++        padding: 10px;
++        border: 1px solid #ccc;
++        border-radius: 3px;
++    }
++
++    .btn-group {
++        text-align: center;
++    }
++
++    .btn {
++        display: inline-block;
++        padding: 8px 16px;
++        font-size: 14px;
++        text-align: center;
++        cursor: pointer;
++        color: #fff;
++        background-color: #4CAF50;
++        border: none;
++        border-radius: 3px;
++    }
++
++    .btn-reset {
++        background-color: #ccc;
++    }
++
++    .form-group.checkbox {
++        display: flex;
++        align-items: center;
++    }
++
++    .form-group.checkbox label {
++        margin-right: 10px;
++    }
++</style>
++<div class="container">
++    <form action="${pageContext.request.contextPath}/NewAccount" method="post" onsubmit="return validateForm()">
++        <h3>User Information</h3>
++
++        <div class="form-group">
++            <label for="account">账号</label>
++            <input type="text" id="account" name="account" value="" required>
++        </div>
++        <div class="form-group">
++            <label for="password">密码</label>
++            <input type="password" id="password" name="password" value="" required><br>
++        </div>
++        <div class="form-group">
++            <label for="repeatedPassword">确认密码</label>
++            <input type="password" id="repeatedPassword" name="repeatedPassword" value="" required><br>
++        </div>
++        <div class="form-group">
++            <label>验证码:</label>
++            <span style="display: flex; align-items: center;">
++                <input type="text" name="checkCode">
++                <img alt="验证码" src="${pageContext.request.contextPath}/ValidateCodeServlet" style="margin-left: 10px;">
++            </span>
++        </div>
++
++        <%@ include file="IncludeAccountFields.jsp" %>
++        <div class="btn-group">
++            <input type="submit" value="注册" class="btn">
++            <input type="reset" value="重置" class="btn btn-reset">
++            <a href="${pageContext.request.contextPath}/login" class="register-link">已有账号？点击登录</a>
++        </div>
++    </form>
++</div>
++<script>
++    function validateForm() {
++        const username = document.getElementById("account").value;
++        const password = document.getElementById("password").value;
++        const repeatPassword=document.getElementById("repeatedPassword").value;
++        const checkCode = document.getElementsByName("checkCode")[0].value;
++
++        if (username.trim() === "" || password.trim() === "" ||repeatPassword.trim()===""|| checkCode.trim() === "") {
++            alert("账号、密码、确认密码或验证码不能为空");
++            return false;
++        }
++        return true;
++    }
++    const error = "${errorMsg}";
++    if (error === '1') {
++        alert("验证码错误")
++    } else if (error === '2') {
++        alert("两次输入的密码不一致")
++    }
++</script>
++
++<%@ include file="../common/IncludeBottom.jsp" %>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"8afe8dee-ddb1-4861-a8ed-c929960822e3\" name=\"变更\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"mavenHome\" value=\"D:/software/apache-maven-3.8.7\" />\r\n        <option name=\"userSettingsFile\" value=\"D:\\software\\apache-maven-3.8.7\\conf\\settings.xml\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2XVdzEPPDBX4RvxEMPCjhmhKupH\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"MavenSettings\" />\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Tomcat 8.5.84\" type=\"#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory\" factoryName=\"Local\" APPLICATION_SERVER_NAME=\"Tomcat 8.5.84\" ALTERNATIVE_JRE_ENABLED=\"false\" nameIsGenerated=\"true\">\r\n      <option name=\"UPDATING_POLICY\" value=\"restart-server\" />\r\n      <deployment>\r\n        <artifact name=\"myJpetstore:war exploded\">\r\n          <settings>\r\n            <option name=\"CONTEXT_PATH\" value=\"/myJpetstore_war_exploded\" />\r\n          </settings>\r\n        </artifact>\r\n      </deployment>\r\n      <server-settings>\r\n        <option name=\"BASE_DIRECTORY_NAME\" value=\"6d7bf3e5-ce26-4877-89fe-bd8a3509d774\" />\r\n      </server-settings>\r\n      <predefined_log_file enabled=\"true\" id=\"Tomcat\" />\r\n      <predefined_log_file enabled=\"true\" id=\"Tomcat Catalina\" />\r\n      <predefined_log_file id=\"Tomcat Manager\" />\r\n      <predefined_log_file id=\"Tomcat Host Manager\" />\r\n      <predefined_log_file id=\"Tomcat Localhost Access\" />\r\n      <RunnerSettings RunnerId=\"Debug\">\r\n        <option name=\"DEBUG_PORT\" value=\"63118\" />\r\n      </RunnerSettings>\r\n      <ConfigurationWrapper VM_VAR=\"JAVA_OPTS\" RunnerId=\"Cover\">\r\n        <option name=\"USE_ENV_VARIABLES\" value=\"true\" />\r\n        <STARTUP>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </STARTUP>\r\n        <SHUTDOWN>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </SHUTDOWN>\r\n      </ConfigurationWrapper>\r\n      <ConfigurationWrapper VM_VAR=\"JAVA_OPTS\" RunnerId=\"Debug\">\r\n        <option name=\"USE_ENV_VARIABLES\" value=\"true\" />\r\n        <STARTUP>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </STARTUP>\r\n        <SHUTDOWN>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </SHUTDOWN>\r\n      </ConfigurationWrapper>\r\n      <ConfigurationWrapper VM_VAR=\"JAVA_OPTS\" RunnerId=\"Profile\">\r\n        <option name=\"USE_ENV_VARIABLES\" value=\"true\" />\r\n        <STARTUP>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </STARTUP>\r\n        <SHUTDOWN>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </SHUTDOWN>\r\n      </ConfigurationWrapper>\r\n      <ConfigurationWrapper VM_VAR=\"JAVA_OPTS\" RunnerId=\"Run\">\r\n        <option name=\"USE_ENV_VARIABLES\" value=\"true\" />\r\n        <STARTUP>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </STARTUP>\r\n        <SHUTDOWN>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </SHUTDOWN>\r\n      </ConfigurationWrapper>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n        <option name=\"BuildArtifacts\" enabled=\"true\">\r\n          <artifact name=\"myJpetstore:war exploded\" />\r\n        </option>\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"应用程序级\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"默认任务\">\r\n      <changelist id=\"8afe8dee-ddb1-4861-a8ed-c929960822e3\" name=\"变更\" comment=\"\" />\r\n      <created>1698718441811</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1698718441811</updated>\r\n      <workItem from=\"1698718444022\" duration=\"54000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9fd434a16af0f8d417e3cb6b31f52b047f25e615)
++++ b/.idea/workspace.xml	(date 1698756551823)
+@@ -1,15 +1,109 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="ArtifactsWorkspaceSettings">
++    <artifacts-to-build>
++      <artifact name="myJpetstore:war exploded" />
++    </artifacts-to-build>
++  </component>
+   <component name="AutoImportSettings">
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="8afe8dee-ddb1-4861-a8ed-c929960822e3" name="变更" comment="" />
++    <list default="true" id="8afe8dee-ddb1-4861-a8ed-c929960822e3" name="变更" comment="">
++      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/dataBaseConfig.properties" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/domain/User.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/AccountDAO.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/DatabaseUtil.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/Imp/AccountDAOImp.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/service/AccountService.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/LoginServlet.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/NewAccountServlet.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/RegisterServlet.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/ValidateCodeServlet.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/dataBaseConfig.properties" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/IncludeAccountFields.jsp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/login.jsp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/register.jsp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/Main.jsp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/Error.jsp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/IncludeBottom.jsp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/includeTop.css" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/jpetstore.css" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/help.html" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/banner_birds.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/banner_cats.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/banner_dogs.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/banner_fish.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/banner_reptiles.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/bird1.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/bird2.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/birds_icon.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/cart.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/cat1.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/cat2.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/cats_icon.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog1.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog2.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog3.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog4.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog5.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dog6.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dogs.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/dogs_icon.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish1.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish2.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish3.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish4.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/fish_icon.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/lizard1.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/logo-topbar.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/poweredby.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/reptiles_icon.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/separator.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/sm_birds.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/sm_cats.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/sm_dogs.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/sm_fish.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/sm_reptiles.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/snake1.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/splash.gif" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/myJpetstore/index.jsp" beforeDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Interface" />
++        <option value="Jsp File" />
++        <option value="Class" />
++      </list>
++    </option>
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="JspContextManager">
++    <jsp-to-context jsp-file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp" context-file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/Error.jsp" />
++  </component>
++  <component name="LogFilters">
++    <option name="FILTER_ERRORS" value="false" />
++    <option name="FILTER_WARNINGS" value="false" />
++    <option name="FILTER_INFO" value="true" />
++    <option name="FILTER_DEBUG" value="true" />
++    <option name="CUSTOM_FILTER" />
++  </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+   </component>
+@@ -22,6 +116,7 @@
+     </option>
+   </component>
+   <component name="ProjectId" id="2XVdzEPPDBX4RvxEMPCjhmhKupH" />
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+@@ -29,10 +124,43 @@
+   <component name="PropertiesComponent">
+     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
++    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+     <property name="WebServerToolWindowFactoryState" value="false" />
++    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
++    <property name="node.js.detected.package.eslint" value="true" />
++    <property name="node.js.detected.package.tslint" value="true" />
++    <property name="node.js.selected.package.eslint" value="(autodetect)" />
++    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+     <property name="settings.editor.selected.configurable" value="MavenSettings" />
+   </component>
+-  <component name="RunManager">
++  <component name="RecentsManager">
++    <key name="CopyFile.RECENT_KEYS">
++      <recent name="E:\javaProject\MyJpestore\src\main\resources" />
++      <recent name="E:\javaProject\MyJpestore\target" />
++      <recent name="E:\javaProject\MyJpestore\src\main\webapp\css" />
++      <recent name="E:\javaProject\MyJpestore\src\main\webapp\images" />
++      <recent name="E:\javaProject\MyJpestore\src\main\webapp" />
++    </key>
++    <key name="MoveFile.RECENT_KEYS">
++      <recent name="E:\javaProject\MyJpestore\src\main\resources" />
++      <recent name="E:\javaProject\MyJpestore\src\main\webapp\WEB-INF\jsp\account" />
++      <recent name="E:\javaProject\MyJpestore" />
++    </key>
++  </component>
++  <component name="RunManager" selected="Tomcat 服务器.Tomcat 8.5.84">
++    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="persistence.test" />
++      <module name="myJpetstore" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="persistence.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
+     <configuration name="Tomcat 8.5.84" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.84" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+       <option name="UPDATING_POLICY" value="restart-server" />
+       <deployment>
+@@ -120,6 +248,15 @@
+         </option>
+       </method>
+     </configuration>
++    <list>
++      <item itemvalue="Tomcat 服务器.Tomcat 8.5.84" />
++      <item itemvalue="应用程序.test" />
++    </list>
++    <recent_temporary>
++      <list>
++        <item itemvalue="应用程序.test" />
++      </list>
++    </recent_temporary>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+@@ -129,11 +266,56 @@
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+       <updated>1698718441811</updated>
+-      <workItem from="1698718444022" duration="54000" />
++      <workItem from="1698718444022" duration="24685000" />
+     </task>
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
+   </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State>
++              <option name="FILTERS">
++                <map>
++                  <entry key="branch">
++                    <value>
++                      <list>
++                        <option value="origin/master" />
++                      </list>
++                    </value>
++                  </entry>
++                </map>
++              </option>
++            </State>
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
++  <component name="XDebuggerManager">
++    <breakpoint-manager>
++      <breakpoints>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/src/main/java/persistence/Imp/AccountDAOImp.java</url>
++          <line>55</line>
++          <option name="timeStamp" value="49" />
++        </line-breakpoint>
++      </breakpoints>
++    </breakpoint-manager>
++    <watches-manager>
++      <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
++        <watch expression="resultSet" />
++      </configuration>
++      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/persistence/Imp/AccountDAOImp.java" line="92">
++        <watch expression="resultSet" />
++      </inline-watch>
++    </watches-manager>
++  </component>
++  <component name="com.intellij.coverage.CoverageDataManagerImpl">
++    <SUITE FILE_PATH="coverage/myJpetstore$Tomcat_8_5_84.ic" NAME="Tomcat 8.5.84 覆盖结果" MODIFIED="1698751692235" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
++  </component>
+ </project>
+\ No newline at end of file
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n  xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n  <modelVersion>4.0.0</modelVersion>\r\n\r\n  <groupId>org.example</groupId>\r\n  <artifactId>myJpetstore</artifactId>\r\n  <version>1.0-SNAPSHOT</version>\r\n  <packaging>war</packaging>\r\n\r\n  <name>myJpetstore Maven Webapp</name>\r\n  <!-- FIXME change it to the project's website -->\r\n  <url>http://www.example.com</url>\r\n\r\n  <properties>\r\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\r\n    <maven.compiler.source>1.7</maven.compiler.source>\r\n    <maven.compiler.target>1.7</maven.compiler.target>\r\n  </properties>\r\n\r\n  <dependencies>\r\n    <dependency>\r\n      <groupId>junit</groupId>\r\n      <artifactId>junit</artifactId>\r\n      <version>4.11</version>\r\n      <scope>test</scope>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <!--jdbc驱动包-->\r\n      <groupId>mysql</groupId>\r\n      <artifactId>mysql-connector-java</artifactId>\r\n      <version>8.0.25</version>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <!-- jstl依赖-->\r\n      <groupId>javax.servlet.jsp.jstl</groupId>\r\n      <artifactId>jstl-api</artifactId>\r\n      <version>1.2</version>\r\n    </dependency>\r\n    <dependency>\r\n      <!--标签库-->\r\n      <groupId>taglibs</groupId>\r\n      <artifactId>standard</artifactId>\r\n      <version>1.1.2</version>\r\n    </dependency>\r\n    <dependency>\r\n      <!--servlet依赖-->\r\n      <groupId>javax.servlet</groupId>\r\n      <artifactId>javax.servlet-api</artifactId>\r\n      <version>3.1.0</version>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <!--jsp依赖-->\r\n      <groupId>javax.servlet.jsp</groupId>\r\n      <artifactId>javax.servlet.jsp-api</artifactId>\r\n      <version>2.3.3</version>\r\n    </dependency>\r\n\r\n  </dependencies>\r\n\r\n  <build>\r\n    <finalName>myJpetstore</finalName>\r\n    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->\r\n      <plugins>\r\n        <plugin>\r\n          <artifactId>maven-clean-plugin</artifactId>\r\n          <version>3.1.0</version>\r\n        </plugin>\r\n        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->\r\n        <plugin>\r\n          <artifactId>maven-resources-plugin</artifactId>\r\n          <version>3.0.2</version>\r\n        </plugin>\r\n        <plugin>\r\n          <artifactId>maven-compiler-plugin</artifactId>\r\n          <version>3.8.0</version>\r\n        </plugin>\r\n        <plugin>\r\n          <artifactId>maven-surefire-plugin</artifactId>\r\n          <version>2.22.1</version>\r\n        </plugin>\r\n        <plugin>\r\n          <artifactId>maven-war-plugin</artifactId>\r\n          <version>3.2.2</version>\r\n        </plugin>\r\n        <plugin>\r\n          <artifactId>maven-install-plugin</artifactId>\r\n          <version>2.5.2</version>\r\n        </plugin>\r\n        <plugin>\r\n          <artifactId>maven-deploy-plugin</artifactId>\r\n          <version>2.8.2</version>\r\n        </plugin>\r\n      </plugins>\r\n    </pluginManagement>\r\n  </build>\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	(revision 9fd434a16af0f8d417e3cb6b31f52b047f25e615)
++++ b/pom.xml	(date 1698727641123)
+@@ -34,6 +34,14 @@
+       <version>8.0.25</version>
+     </dependency>
+ 
++
++    <dependency>
++      <!-- 德鲁伊数据库连接池 -->
++      <groupId>com.alibaba</groupId>
++      <artifactId>druid</artifactId>
++      <version>1.2.16</version>
++    </dependency>
++
+     <dependency>
+       <!-- jstl依赖-->
+       <groupId>javax.servlet.jsp.jstl</groupId>
+@@ -60,8 +68,9 @@
+       <version>2.3.3</version>
+     </dependency>
+ 
++
++
+   </dependencies>
+-
+   <build>
+     <finalName>myJpetstore</finalName>
+     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+Index: src/main/webapp/css/jpetstore.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/css/jpetstore.css b/src/main/webapp/css/jpetstore.css
+new file mode 100644
+--- /dev/null	(date 1698730377425)
++++ b/src/main/webapp/css/jpetstore.css	(date 1698730377425)
+@@ -0,0 +1,323 @@
++body {
++  margin: 0ex 10ex 0ex 10ex;
++  padding: 0ex;
++  font-family: helvetica, tahoma, arial, verdana, sans-serif;
++  font-size: 2ex;
++  color: #333;
++  background-color: #444;
++}
++
++pre {
++  font-family: "Courier New", Courier, mono;
++
++  font-style: normal;
++  background-color: #FFFFFF;
++  white-space: pre
++}
++
++h1 {
++  margin: 1ex 0ex 1ex 0ex;
++  padding: 0ex;
++
++  line-height: 3ex;
++  font-weight: 900;
++  color: #666;
++}
++
++h2 {
++  margin: 2ex 0ex 1ex 0ex;
++  padding: 0ex;
++
++  line-height: 2ex;
++  font-weight: 700;
++  color: #444;
++}
++
++h3 {
++  margin: 1ex 0ex 1ex 0ex;
++  padding: 0ex;
++
++  line-height: 1.6ex;
++  font-weight: 700;
++  color: #222;
++}
++
++p {
++  font-family: helvetica, tahoma, arial, verdana, sans-serif;
++
++  margin: 0ex 0ex 0ex 0ex;
++  padding: 2ex;
++}
++
++img {
++  border: 0;
++}
++
++li {
++  font-family: helvetica, tahoma, arial, verdana, sans-serif;
++
++  margin: 0ex 0ex 0ex 0ex;
++  padding: 0ex;
++}
++
++table {
++  border-width: 0;
++  empty-cells: show;
++}
++
++td, th {
++  empty-cells: show;
++  padding: .3ex .3ex;
++  vertical-align: top;
++  text-align: left;
++  border-width: 0;
++  border-spacing: 0;
++  background-color: #ececec
++}
++
++th {
++  font-weight: bold;
++  background-color: #e2e2e2;
++}
++
++a, a:visited, a:link {
++  color: #039;
++
++  text-decoration: none;
++  font-family: helvetica, tahoma, arial, verdana, sans-serif;
++}
++
++a:hover {
++  color: #69f;
++}
++
++a.Button, a.Button:link, a.Button:visited {
++  padding: .3ex;
++  color: #fff;
++  background-color: #005e21;
++  text-decoration: none;
++  font-family: helvetica, tahoma, arial, verdana, sans-serif;
++  font-size: 1.5ex;
++}
++
++a.Button:hover {
++  color: #05d7fe;
++  background-color: #54c07a;
++}
++
++#Logo {
++  width: 33%;
++  height: 9ex;
++  margin: 0ex 0ex 0ex 0ex;
++  padding: 0ex 0ex 0ex 0ex;
++  border-width: 0ex 0ex .3ex 0px;
++  border-style: solid;
++  border-color: #ccc;
++  float: left;
++  background-color:#05d7fe;
++  color: #fff;
++  line-height: 9ex;
++  voice-family: "\"}\"";
++  voice-family: inherit;
++  height: 9ex;
++}
++
++body>#Logo {
++  height: 9ex;
++}
++
++#Menu {
++  width: 33%;
++  height: 9ex;
++  margin: 0ex 0ex 0ex 0ex;
++  padding: 0ex 0ex 0ex 0ex;
++  border-width: 0ex 0ex .3ex 0px;
++  border-style: solid;
++  border-color: #ccc;
++  float: left;
++  background-color: #05d7fe;
++  color: #eaac00;
++  text-decoration: none;
++  font-family: helvetica, tahoma, arial, verdana, sans-serif;
++  text-align: center;
++  line-height: 9ex;
++  voice-family: "\"}\"";
++  voice-family: inherit;
++  height: 9ex;
++}
++
++#Menu, #Menu a, #Menu a:link, #Menu a:visited, #Menu a:hover {
++  color: #eaac00;
++  text-decoration: none;
++  font-family: helvetica, tahoma, arial, verdana, sans-serif;
++}
++
++body>#Menu {
++  height: 9ex;
++}
++
++ {
++}
++
++#Search {
++  width: 33%;
++  height: 9ex;
++  margin: 0ex 0ex 0ex 0ex;
++  padding: 0ex 0ex 0ex 0ex;
++  border-width: 0ex 0ex .3ex 0px;
++  border-style: solid;
++  border-color: #ccc;
++  float: left;
++  text-align: center;
++  background-color: #05d7fe;
++  color: #eaac00;
++  line-height: 9ex;
++  voice-family: "\"}\"";
++  voice-family: inherit;
++  height: 9ex;
++}
++
++body>#Search {
++  height: 9ex;
++}
++
++#Search input {
++  border-width: .1ex .1ex .1ex .1ex;
++  border-style: solid;
++  border-color: #aaa;
++  background-color: #666;
++  color: #eaac00;
++}
++
++#QuickLinks {
++  text-align: center;
++  background-color: #FFF;
++  width: 99%;
++}
++
++#PoweredBy {
++  width: 30%;
++  height: 9ex;
++  margin: 0ex 0ex 0ex 0ex;
++  padding: 0ex 0ex 0ex 0ex;
++  border-width: .3ex 0ex .3ex 0px;
++  border-style: solid;
++  border-color: #ccc;
++  float: left;
++  background-color: #05d7fe;
++  color: #fff;
++  line-height: 9ex;
++  voice-family: "\"}\"";
++  voice-family: inherit;
++  height: 9ex;
++}
++
++body>#PoweredBy {
++  height: 9ex;
++}
++
++#Banner {
++  width: 69%;
++  height: 9ex;
++  margin: 0ex 0ex 0ex 0ex;
++  padding: 0ex 0ex 0ex 0ex;
++  border-width: .3ex 0ex .3ex 0px;
++  border-style: solid;
++  border-color: #ccc;
++  float: left;
++  background-color:#05d7fe;
++  color: #fff;
++  line-height: 9ex;
++  voice-family: "\"}\"";
++  voice-family: inherit;
++  height: 9ex;
++}
++
++body>#Banner {
++  height: 9ex;
++}
++
++#Content {
++  margin: 0;
++  padding: 0ex 0ex 0ex 0ex;
++  width: 99%;
++  color: #333;
++  background-color: #FFF;
++  border-width: 0;
++}
++
++#Separator {
++  clear:both;
++  margin: 0;
++  height:0;
++}
++
++#Main {
++  margin: 0;
++  padding: 1ex;
++  color: #333;
++  background-color: #FFF;
++  border-width: 1ex 0ex 2ex 0px;
++  border-style: solid;
++  border-color: #fff;
++}
++
++#Sidebar {
++  float: left;
++  background:inherit;
++  width: 30%;
++}
++
++#MainImage {
++  float: left;
++  background:inherit;
++  text-align:center;
++  width: 50%;
++}
++
++#Catalog {
++  padding: 1ex;
++  background:inherit;
++  text-align:center;
++}
++
++#Catalog input[type="submit"]{
++  padding: .3ex;
++  color: #fff;
++  background-color: #005e21;
++  text-decoration: none;
++  font-family: helvetica, tahoma, arial, verdana, sans-serif;
++  font-size: 1.5ex;
++  border-width:0;
++}
++#Catalog input[type="submit"]:hover {
++  color: #05d7fe;
++  background-color: #54c07a;
++  cursor:pointer;
++}
++
++#Catalog table{
++  margin-left:auto;
++  margin-right:auto;
++}
++
++#BackLink{
++  padding: 1ex;
++  float: right;
++  border-width: .1ex 0ex .1ex 0px;
++  border-style: solid;
++  border-color:#05d7fe;
++}
++
++#Cart{
++  width: 69.99%;
++  float: left;
++  background-color:#fff;
++}
++
++#MyList{
++  width: 30%;
++  float: left;
++  background-color:#ccc;
++  text-align:left;
++}

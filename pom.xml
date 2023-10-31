@@ -34,6 +34,14 @@
       <version>8.0.25</version>
     </dependency>
 
+
+    <dependency>
+      <!-- 德鲁伊数据库连接池 -->
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.2.16</version>
+    </dependency>
+
     <dependency>
       <!-- jstl依赖-->
       <groupId>javax.servlet.jsp.jstl</groupId>
@@ -60,8 +68,9 @@
       <version>2.3.3</version>
     </dependency>
 
-  </dependencies>
 
+
+  </dependencies>
   <build>
     <finalName>myJpetstore</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
