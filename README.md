@@ -9,3 +9,6 @@ javaweb实验--宠物商店jpetstore
 在本地创建名为jpetstore数据库
 克隆之后用IDEA打开pom.xml
 修改databaseConfig.properties文件中的mysql用户名和密码
+
+2.0
+完善了注册的错误提示机制和数据库操作的异常处理，添加了事务机制
