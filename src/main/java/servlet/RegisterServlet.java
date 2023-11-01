@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 转发到注册页面
  * @author pp
  */
 @WebServlet("/register")

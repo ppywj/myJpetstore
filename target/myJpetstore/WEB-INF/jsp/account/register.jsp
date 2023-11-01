@@ -7,7 +7,12 @@
 --%>
 
 
-<%@ include file="../common/IncludeTop.jsp" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 核心标签库-->
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- 格式化标签库-->
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!-- 函数标签库-->
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <style>
     body {
@@ -85,6 +90,7 @@
         margin-right: 10px;
     }
 </style>
+<a href="Main" >return to Menu</a>
 <div class="container">
     <form action="${pageContext.request.contextPath}/NewAccount" method="post" onsubmit="return validateForm()">
         <h3>User Information</h3>

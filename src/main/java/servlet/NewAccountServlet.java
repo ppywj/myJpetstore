@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
+ * 执行注册服务 成功则转发到登录页面 失败则转发到注册页面
  * @author pp
  */
 @WebServlet("/NewAccount")

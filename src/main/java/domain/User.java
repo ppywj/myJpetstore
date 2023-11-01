@@ -3,8 +3,8 @@ package domain;
 import java.io.Serializable;
 
 /**
+ * 用户类
  * @author pp
- * 账号类
  */
 @SuppressWarnings({"all"})
 public class User implements Serializable {

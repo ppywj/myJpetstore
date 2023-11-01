@@ -102,6 +102,7 @@
     </style>
 </head>
 <body>
+<a href="Main" >return to Menu</a>
 <div class="container">
     <h2>登录</h2>
     <form action="${pageContext.request.contextPath}/login" method="post" onsubmit="return validateForm()">

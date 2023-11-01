@@ -5,6 +5,7 @@ import persistence.AccountDAO;
 import persistence.Imp.AccountDAOImp;
 
 /**
+ * 账户服务
  * @author pp
  */
 public class AccountService {
@@ -18,7 +19,12 @@ public class AccountService {
         return accountDAO.getAccountByUsername(username);
     }
 
-    //根据账号密码获取用户详细信息
+    /**
+     * 根据账号密码获取用户的详细信息
+     * @param username
+     * @param password
+     * @return
+     */
     public User getAccount(String username, String password) {
         User user = new User();
         user.setUsername(username);
@@ -26,6 +32,11 @@ public class AccountService {
         return accountDAO.getAccountByUsernameAndPassword(user);
     }
 
+    /**
+     * 添加用户
+     * @param user
+     * @return
+     */
     public int insertAccount(User user) {
         int res1 = accountDAO.insertAccount(user);
         if (res1 != 0)
@@ -35,6 +46,11 @@ public class AccountService {
         return 0;
     }
 
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
     public int updateAccount(User user) {
         int res1 = accountDAO.updateAccount(user);
         if (res1 != 0)
