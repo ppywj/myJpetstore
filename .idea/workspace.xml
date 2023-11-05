@@ -9,67 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8afe8dee-ddb1-4861-a8ed-c929960822e3" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/domain/CartItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Category.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/domain/LineItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Order.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Sequence.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/CategoryDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/Imp/CategoryDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/Imp/ItemDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/Imp/LineItemDAOimpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/Imp/OrderDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/Imp/ProductDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/Imp/SequenceDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/ItemDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/LineItemDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/OrderDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/ProductDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/SequenceDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/service/CatalogService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/service/OrderService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/AddItemToCartServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/MainPageServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/VieProductServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/ViewCategoryServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/ViewItemServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/EditAccountForm.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/cart/Cart.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/Category.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/Item.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/Product.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/SearchProducts.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/order/ConfirmOrder.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/order/ListOrders.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/order/OrderForm.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/order/ShippingForm.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/order/ViewOrder.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/servlet/NewAccountServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlet/NewAccountServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/servlet/RegisterServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlet/RegisterServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/login.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/register.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/register.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/jpetstore.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/jpetstore.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/persistence/Imp/AccountDAOImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/persistence/Imp/AccountDAOImp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/AccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/AccountService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/servlet/NewAccountServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/servlet/NewAccountServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/servlet/RegisterServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/servlet/RegisterServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/Imp/AccountDAOImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/Imp/AccountDAOImp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/service/AccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/service/AccountService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/NewAccountServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/NewAccountServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/RegisterServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/RegisterServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/account/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/account/login.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/account/register.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/account/register.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/myJpetstore/css/jpetstore.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/css/jpetstore.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/myJpetstore/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="8afe8dee-ddb1-4861-a8ed-c929960822e3" name="变更" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -276,7 +216,7 @@
       <updated>1698718441811</updated>
       <workItem from="1698718444022" duration="29806000" />
       <workItem from="1698764340628" duration="8556000" />
-      <workItem from="1698804148522" duration="10115000" />
+      <workItem from="1698804148522" duration="10442000" />
     </task>
     <task id="LOCAL-00001" summary="基本完成了登录注册功能，先创建数据库名为jpetstore，讲两个sql文件执行一下，databaseConfig配置文件中修改一下用户名和密码就行">
       <created>1698757444835</created>
@@ -299,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1698760930416</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="完成了查看商品列表和商品详细信息的功能，购物车功能待完成">
+      <created>1698841859994</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1698841859994</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,7 +279,8 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="基本完成了登录注册功能，先创建数据库名为jpetstore，讲两个sql文件执行一下，databaseConfig配置文件中修改一下用户名和密码就行" />
     <MESSAGE value="为数据库更新操作添加了事务机制，完善了异常处理机制,完善了注册错误提示机制" />
-    <option name="LAST_COMMIT_MESSAGE" value="为数据库更新操作添加了事务机制，完善了异常处理机制,完善了注册错误提示机制" />
+    <MESSAGE value="完成了查看商品列表和商品详细信息的功能，购物车功能待完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="完成了查看商品列表和商品详细信息的功能，购物车功能待完成" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
