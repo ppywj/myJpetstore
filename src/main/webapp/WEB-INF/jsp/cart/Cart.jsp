@@ -57,7 +57,7 @@
 						<fmt:formatNumber value="${cartItem.total}" pattern="$#,##0.00" />
 					</td>
 					<td>
-						<a class="Button" href="removeItemFromCart?workingItemId=${cartItem.item.itemId}">
+						<a class="Button" href="removeItemFromCart?workingCartItemId=${cartItem.cartItemId}">
 							Remove
 						</a>
 					</td>

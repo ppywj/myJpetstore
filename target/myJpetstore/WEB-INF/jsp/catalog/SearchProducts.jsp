@@ -1,7 +1,7 @@
 <%@ include file="../common/IncludeTop.jsp"%>
 
 <div id="BackLink">
-    <a href="main">Return to Main Menu</a>
+    <a href="Main">Return to Main Menu</a>
 </div>
 
 <div id="Catalog">

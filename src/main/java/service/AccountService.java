@@ -2,17 +2,22 @@ package service;
 
 import domain.User;
 import persistence.AccountDAO;
+import persistence.CartDAO;
 import persistence.Imp.AccountDAOImp;
+import persistence.Imp.CartDAOImp;
 
 /**
  * 账户服务
+ *
  * @author pp
  */
 public class AccountService {
     private AccountDAO accountDAO;
+    private CartDAO cartDAO;
 
     public AccountService() {
         accountDAO = new AccountDAOImp();
+        cartDAO = new CartDAOImp();
     }
 
     public User getAccount(String username) {
@@ -21,6 +26,7 @@ public class AccountService {
 
     /**
      * 根据账号密码获取用户的详细信息
+     *
      * @param username
      * @param password
      * @return
@@ -34,6 +40,7 @@ public class AccountService {
 
     /**
      * 添加用户
+     *
      * @param user
      * @return
      */
@@ -48,6 +55,7 @@ public class AccountService {
 
     /**
      * 更新用户信息
+     *
      * @param user
      * @return
      */
@@ -61,6 +69,10 @@ public class AccountService {
             res3 = accountDAO.updateSignon(user);
         }
         return 0;
+    }
+
+    public int clearCart(String userName) {
+        return cartDAO.clearCart(userName);
     }
 
 }

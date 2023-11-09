@@ -1,6 +1,9 @@
 package persistence;
 
 import domain.User;
+import domain.recommend;
+
+import java.util.ArrayList;
 
 /**
  * @author pp
@@ -22,4 +25,6 @@ public interface AccountDAO {
     int updateProfile(User user);
 
     int  updateSignon(User user);
+
+    recommend getRecommendList(String name);
 }

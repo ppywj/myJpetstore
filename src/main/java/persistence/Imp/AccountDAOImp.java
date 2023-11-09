@@ -1,13 +1,12 @@
 package persistence.Imp;
 
 import domain.User;
+import domain.recommend;
 import persistence.AccountDAO;
 import persistence.DatabaseUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.*;
+import java.util.ArrayList;
 
 import static persistence.DatabaseUtil.*;
 
@@ -43,6 +42,18 @@ public class AccountDAOImp implements AccountDAO {
     private static final String updateSignon = "UPDATE SIGNON SET PASSWORD = ? WHERE USERNAME = ?";
 
     private static final String insertSignon = "INSERT INTO SIGNON (PASSWORD,USERNAME) VALUES (?, ?)";
+
+    private static final String recommendListByCount = "SELECT productname, COUNT(*) as frequency\n" +
+            "FROM viewitemrecord\n" +
+            "WHERE useraccount = ?\n" +
+            "GROUP BY productname\n" +
+            "ORDER BY frequency DESC\n" +
+            "LIMIT 3;";
+    private static final String recommendListByDate = "SELECT productname\n" +
+            "FROM viewitemrecord\n" +
+            "WHERE useraccount = ?\n" +
+            "ORDER BY ABS(TIMESTAMPDIFF(SECOND, date, NOW())) ASC\n" +
+            "LIMIT 3;";
 
     @Override
     public User getAccountByUsername(String username) {
@@ -320,5 +331,37 @@ public class AccountDAOImp implements AccountDAO {
             close(null, preparedStatement, connection);
         }
 
+    }
+
+    @Override
+    public recommend getRecommendList(String name) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ArrayList<String> recommendList = new ArrayList<String>();
+        recommend recommend=null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(recommendListByCount);
+            preparedStatement.setString(1, name);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                recommendList.add(resultSet.getString("productname"));
+            }
+            preparedStatement = connection.prepareStatement(recommendListByDate);
+            preparedStatement.setString(1, name);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String temp=resultSet.getString("productname");
+                if(!recommendList.contains(temp))
+                    recommendList.add(temp);
+            }
+            recommend=new recommend(recommendList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(resultSet, preparedStatement, connection);
+            return recommend;
+        }
     }
 }

@@ -90,15 +90,22 @@
         margin-right: 10px;
     }
 </style>
-<a href="Main" >return to Menu</a>
+<!-- 引入jquery -->
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- 引入axios cdn依赖-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<a href="Main">return to Menu</a>
 <div class="container">
     <form action="${pageContext.request.contextPath}/NewAccount" method="post" onsubmit="return validateForm()">
         <h3>User Information</h3>
 
         <div class="form-group">
             <label for="account">账号</label>
-            <input type="text" id="account" name="account" value="" required>
+            <input type="text" id="account" name="account" value="" required onblur="checkAccount()">
+            <div id="accountTip"></div>
         </div>
+
         <div class="form-group">
             <label for="password">密码</label>
             <input type="password" id="password" name="password" value="" required><br>
@@ -110,7 +117,7 @@
         <div class="form-group">
             <label>验证码:</label>
             <span style="display: flex; align-items: center;">
-                <input type="text" name="checkCode">
+                <input type="text" name="checkCode" required>
                 <img alt="验证码" src="${pageContext.request.contextPath}/ValidateCodeServlet" style="margin-left: 10px;">
             </span>
         </div>
@@ -124,6 +131,19 @@
     </form>
 </div>
 <script>
+    //错误提示处理
+    const error = "${errorMsg}";
+    if (error === '1') {
+        alert("验证码错误")
+    } else if (error === '2') {
+        alert("两次输入的密码不一致")
+    } else if (error === '3') {
+        alert("账号已被注册")
+    } else if (error === '4') {
+        alert("系统异常请稍后重试")
+    }
+
+    //排除输入空格的情况
     function validateForm() {
         const username = document.getElementById("account").value;
         const password = document.getElementById("password").value;
@@ -137,16 +157,26 @@
         return true;
     }
 
-    const error = "${errorMsg}";
-    if (error === '1') {
-        alert("验证码错误")
-    } else if (error === '2') {
-        alert("两次输入的密码不一致")
-    } else if (error === '3') {
-        alert("账号已被注册")
-    } else if (error === '4') {
-        alert("系统异常请稍后重试")
+    //axios检查账号可用性
+    function checkAccount() {
+        var account = $('#account').val(); //账号
+        if (account === '')
+            return;
+        alert("123")
+        //使axios发送http请求
+        axios.get("http://localhost:90/myJpetstore_war_exploded/checkAccount", {
+            params: {
+                account: account
+            }
+        }).then(function (result) {
+            //发送请求之后获取到响应结果
+            const res = result.data;
+            if (res === 'not') {
+                $('#accountTip').html('账号已被注册').css('color', 'red');
+            } else if (res === 'yes') {
+                $('#accountTip').html('账号可用').css('color', 'green');
+            }
+        });
     }
 </script>
-
 <%@ include file="../common/IncludeBottom.jsp" %>

@@ -1,12 +1,9 @@
 package persistence;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import persistence.Imp.logInfoDAOImp;
 
-import static persistence.DatabaseUtil.getConnection;
-import static persistence.DatabaseUtil.startTransaction;
+import java.math.BigDecimal;
+import java.sql.*;
 
 /**
  * @author pp
@@ -19,19 +16,33 @@ public class test {
             "AND SIGNON.USERNAME = ACCOUNT.USERID AND PROFILE.USERID = ACCOUNT.USERID AND PROFILE.FAVCATEGORY = BANNERDATA.FAVCATEGORY";
 
     public static void main(String[] args) throws SQLException {
-        Connection connection=getConnection();
-        PreparedStatement statement=connection.prepareStatement(getAccountByUsernameAndPassword);
-        statement.setString(1,"ACID");
-        statement.setString(2,"ACID");
-        ResultSet resultSet=statement.executeQuery();
-        if (resultSet.next())
-        {
-            System.out.println(resultSet.getString(1));
-            System.out.println(resultSet.getString(2));
-            System.out.println(resultSet.getString(3));
-            System.out.println(resultSet.getString(4));
-            System.out.println(resultSet.getString(5));
-            System.out.println(resultSet.getString(6));
-        }
+//        ItemDAOImpl imp = new ItemDAOImpl();
+//        Item item = imp.getItem("EST-10");
+//        CartDAOImp im = new CartDAOImp();
+//        CartItem cartItem = new CartItem();
+//        cartItem.setItem(item);
+//        cartItem.setQuantity(10);
+//        cartItem.setTotal(item.getListPrice().multiply(new BigDecimal(10)));
+//        cartItem.setUsername("1234");
+//        im.addCartItem(cartItem);
+//        im.deleteCartItem(1);
+//        ArrayList<CartItem> list = im.getCartItemsByUserName("1234");
+//        for (CartItem i : list) {
+//            System.out.println(i.getCartItemId());
+//        }
+
+        logInfoDAOImp logInfoDAO = new logInfoDAOImp();
+
+        // 测试 addViewCategoryRecord 方法
+        logInfoDAO.addViewCategoryRecord("testUser", "testItem", new Timestamp(System.currentTimeMillis()));
+
+        // 测试 addLoginRecord 方法
+        logInfoDAO.addLoginRecord("testUser", new Timestamp(System.currentTimeMillis()), "192.168.1.100");
+
+        // 测试 addRegisterRecord 方法
+        logInfoDAO.addRegisterRecord("testUser", "192.168.1.100", new Timestamp(System.currentTimeMillis()));
+
+        // 测试 addOrderRecord 方法
+        logInfoDAO.addOrderRecord("testUser", new BigDecimal("100.00"), "testCategory", new Timestamp(System.currentTimeMillis()));
     }
 }

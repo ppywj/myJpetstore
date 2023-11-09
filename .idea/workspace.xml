@@ -9,7 +9,115 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8afe8dee-ddb1-4861-a8ed-c929960822e3" name="变更" comment="" />
+    <list default="true" id="8afe8dee-ddb1-4861-a8ed-c929960822e3" name="变更" comment="完成了查看商品列表和商品详细信息的功能，购物车功能待完成">
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Cart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/recommend.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/CartDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/Imp/CartDAOImp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/Imp/logInfoDAOImp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/logInfoDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/CartService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/OtherService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/ConfirmOrderServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/ConfirmShipServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/EditAccountServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/FilterServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/OrderServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/RemoveItemFromCart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/SearchProductServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/SinOutServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/ViewCartServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/ViewOrderForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/checkAccountServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/checkRepeatPwdServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlet/editAccountActionServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/___.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/___1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/banner_birds.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/banner_cats.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/banner_dogs.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/banner_fish.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/banner_reptiles.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/bird1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/bird2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/birds_icon.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/cart.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/cat1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/cat2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/cats_icon.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog3.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog4.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog5.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dog6.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dogs.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/dogs_icon.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish3.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish4.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/fish_icon.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/lizard1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/logo-topbar.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/poweredby.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/reptiles_icon.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/separator.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/sm_birds.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/sm_cats.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/sm_dogs.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/sm_fish.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/sm_reptiles.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/snake1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]/splash.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[变更]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/domain/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/domain/CartItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/domain/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/domain/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/AccountDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/AccountDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/Imp/AccountDAOImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/Imp/AccountDAOImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlet/AddItemToCartServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlet/AddItemToCartServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlet/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlet/LoginServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlet/VieProductServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlet/VieProductServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/EditAccountForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/EditAccountForm.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/register.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/account/register.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/cart/Cart.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/cart/Cart.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/Category.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/Category.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/Main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/Main.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/SearchProducts.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/catalog/SearchProducts.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/order/ShippingForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/order/ShippingForm.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/CartItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/CartItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/Order.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/persistence/AccountDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/persistence/AccountDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/persistence/Imp/AccountDAOImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/persistence/Imp/AccountDAOImp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/persistence/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/persistence/test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/service/AccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/AccountService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/servlet/AddItemToCartServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/servlet/AddItemToCartServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/servlet/LoginServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/servlet/LoginServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/servlet/VieProductServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/servlet/VieProductServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/domain/CartItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/domain/CartItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/domain/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/domain/Order.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/AccountDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/AccountDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/Imp/AccountDAOImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/Imp/AccountDAOImp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/persistence/test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/service/AccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/service/AccountService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/AddItemToCartServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/AddItemToCartServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/LoginServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/LoginServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/VieProductServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/classes/servlet/VieProductServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/account/EditAccountForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/account/EditAccountForm.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/account/register.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/account/register.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/cart/Cart.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/cart/Cart.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/catalog/Category.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/catalog/Category.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/catalog/Main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/catalog/Main.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/catalog/SearchProducts.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/catalog/SearchProducts.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/common/IncludeTop.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/common/IncludeTop.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/order/ShippingForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/myJpetstore/WEB-INF/jsp/order/ShippingForm.jsp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,8 +126,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Jsp File" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -36,6 +144,14 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="JspContextManager">
     <jsp-to-context jsp-file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/IncludeTop.jsp" context-file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/common/Error.jsp" />
@@ -70,8 +186,9 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="ToolWindow运行.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/order" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/servlet" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -83,16 +200,19 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\javaProject\MyJpestore\src\main\java\servlet" />
       <recent name="E:\javaProject\MyJpestore\src\main\webapp\WEB-INF\jsp\order" />
       <recent name="E:\javaProject\MyJpestore\src\main\webapp\WEB-INF\jsp\catalog" />
       <recent name="E:\javaProject\MyJpestore\src\main\webapp\WEB-INF\jsp\account" />
       <recent name="E:\javaProject\MyJpestore\src\main\webapp\WEB-INF\jsp\cart" />
-      <recent name="E:\javaProject\MyJpestore\src\main\java\persistence\Imp" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\javaProject\MyJpestore\src\main\resources" />
       <recent name="E:\javaProject\MyJpestore\src\main\webapp\WEB-INF\jsp\account" />
       <recent name="E:\javaProject\MyJpestore" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="servlet" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat 服务器.Tomcat 8.5.84">
@@ -217,6 +337,12 @@
       <workItem from="1698718444022" duration="29806000" />
       <workItem from="1698764340628" duration="8556000" />
       <workItem from="1698804148522" duration="10442000" />
+      <workItem from="1699175208567" duration="2505000" />
+      <workItem from="1699322812133" duration="15221000" />
+      <workItem from="1699358532116" duration="14559000" />
+      <workItem from="1699398879958" duration="10095000" />
+      <workItem from="1699428121377" duration="14507000" />
+      <workItem from="1699503879790" duration="7636000" />
     </task>
     <task id="LOCAL-00001" summary="基本完成了登录注册功能，先创建数据库名为jpetstore，讲两个sql文件执行一下，databaseConfig配置文件中修改一下用户名和密码就行">
       <created>1698757444835</created>
@@ -246,7 +372,14 @@
       <option name="project" value="LOCAL" />
       <updated>1698841859994</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="完成了查看商品列表和商品详细信息的功能，购物车功能待完成">
+      <created>1699175252450</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1699175252450</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,14 +419,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/persistence/Imp/AccountDAOImp.java</url>
-          <line>55</line>
-          <option name="timeStamp" value="49" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/servlet/ViewItemServlet.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="52" />
+          <url>file://$PROJECT_DIR$/src/main/java/servlet/ConfirmOrderServlet.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -301,7 +429,7 @@
       <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
         <watch expression="resultSet" />
       </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/persistence/Imp/AccountDAOImp.java" line="92">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/persistence/Imp/AccountDAOImp.java" line="103">
         <watch expression="resultSet" />
       </inline-watch>
     </watches-manager>

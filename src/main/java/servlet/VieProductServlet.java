@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author pp
  */
-@WebServlet("/ViewProduct")
+@WebServlet("/viewProduct")
 public class VieProductServlet extends HttpServlet {
     //private CatalogService=new CatalogService();
     private static final String VIEW_PRODUCT = "/WEB-INF/jsp/catalog/Product.jsp";

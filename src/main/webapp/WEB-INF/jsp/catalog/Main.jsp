@@ -6,6 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@include file="../common/IncludeTop.jsp"%>
+<!-- 引入jquery   -->
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- 引入axios cdn依赖-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <c:if test="${sessionScope.account == null}">
   <div id="Welcome">

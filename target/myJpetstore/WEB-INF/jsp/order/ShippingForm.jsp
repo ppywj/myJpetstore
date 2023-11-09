@@ -1,4 +1,4 @@
-<%@ include file="../common/IncludeTop.jsp"%>
+0<%@ include file="../common/IncludeTop.jsp"%>
 
 <div id="Catalog">
 	<form action="confirmShip" method="post">
